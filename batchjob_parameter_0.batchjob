@@ -73,6 +73,11 @@ echo $SLURM_JOB_NODELIST
 echo
 echo JOB_ID:
 echo $SLURM_JOBID
+mkdir files_job_$SLURM_JOBID
+echo Criado dir files_job_$SLURM_JOBID
+program=$1
+echo Running $program 
+gcc $program.c -o $program -fopenmp
 echo ################
 
 ############# Commands...
