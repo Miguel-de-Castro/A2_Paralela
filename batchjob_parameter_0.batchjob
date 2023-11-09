@@ -76,8 +76,10 @@ echo $SLURM_JOBID
 mkdir files_job_$SLURM_JOBID
 echo Criado dir files_job_$SLURM_JOBID
 program=$1
-echo Running $program 
-gcc $program.c -o $program -fopenmp
+size=$2
+echo Running $program size $size
+mpicc $program.c -o $program-$size -DSIZE=$size 
+mpicc $program.c -o $program-$size -DSIZE=$size -fopenmp
 echo ################
 
 ############# Commands...
