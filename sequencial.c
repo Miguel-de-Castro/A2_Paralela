@@ -54,11 +54,15 @@ int main(int argc, char *argv[]) {
   // PREPARA PARA MEDIR TEMPO
   elapsed_time = - MPI_Wtime ();
 
+  // Enviar linhas através do MPI
+
   // REALIZA A MULTIPLICACAO
-  for (i=0 ; i<lres; i++) {
-      for (j=0 ; j<cres; j++) {
+
+  // i = var1 / lres = var2 (MPI)
+  for (i=0 ; i<lres; i++) { // OpenMP
+      for (j=0 ; j<cres; j++) { 
           mres[i][j] = 0;
-          for (k=0 ; k<c1; k++) {
+          for (k=0 ; k<c1; k++) { // Escravo
               mres[i][j] += m1[i][k] * m2[k][j];
           }
       }
