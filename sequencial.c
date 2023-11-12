@@ -55,6 +55,16 @@ int main(int argc, char *argv[]) {
 
         // Envia a M2 
         MPI_Bcast(&m2, SIZE * SIZE, MPI_INT, MESTREID, MPI_COMM_WORLD);
+
+        int chunkSize = SIZE / (p - 1);
+
+        printf("chunkSize - %d", chunkSize);
+
+        for (int i=0; i<p-1; ++i) {
+            int offset = i * chunkSize;
+			MPI_Send(&offset,1,MPI_INT,i+1,MESTREID,MPI_COMM_WORLD);
+			//MPI_Send(&b[i],1,MPI_INT,i+1,MESTREID,MPI_COMM_WORLD);
+		}
     
     } else {
         MPI_Bcast(&m2, SIZE * SIZE, MPI_INT, MESTREID, MPI_COMM_WORLD);
@@ -65,6 +75,11 @@ int main(int argc, char *argv[]) {
             }
             printf("\n");
         }
+        int offset;
+        MPI_Recv(&offset,1,MPI_INT,MESTREID,id,MPI_COMM_WORLD);
+        printf("\n");
+        printf("id - %d, offset - %d", id, offset);
+        printf("\n");
     }
 
 /*
