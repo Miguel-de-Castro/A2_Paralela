@@ -54,10 +54,10 @@ int main(int argc, char *argv[]) {
         }
 
         // Envia a M2 
-        MPI_Bcast(&m2, SIZE * SIZE, MPI_INT, MESTREID, MPI_COMM_WORLD)
+        MPI_Bcast(&m2, SIZE * SIZE, MPI_INT, MESTREID, MPI_COMM_WORLD);
     
     } else {
-        MPI_Bcast(&m2, SIZE * SIZE, MPI_INT, MESTREID, MPI_COMM_WORLD)
+        MPI_Bcast(&m2, SIZE * SIZE, MPI_INT, MESTREID, MPI_COMM_WORLD);
         for (j = 0; j < SIZE; j++) {
             printf("id: %d - %d ", id, m2[i][j]);
         }
