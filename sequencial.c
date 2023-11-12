@@ -58,8 +58,12 @@ int main(int argc, char *argv[]) {
     
     } else {
         MPI_Bcast(&m2, SIZE * SIZE, MPI_INT, MESTREID, MPI_COMM_WORLD);
-        for (j = 0; j < SIZE; j++) {
-            printf("id: %d - %d ", id, m2[i][j]);
+        printf("\n");
+        for (i = 0; i < SIZE; i++) {
+            for (j = 0; j < SIZE; j++) {
+                 printf("id: %d - %d ", id, m2[i][j]);
+            }
+            printf("\n");
         }
     }
 
