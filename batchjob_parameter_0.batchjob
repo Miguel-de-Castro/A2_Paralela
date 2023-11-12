@@ -79,34 +79,38 @@ program=$1
 size=$2
 echo Running $program size $size
 mpicc $program.c -o $program-$size -DSIZE=$size 
-mpicc $program.c -o $program-$size -DSIZE=$size -fopenmp
+# mpicc $program.c -o $program-$size -DSIZE=$size -fopenmp
 echo ################
 
 ############# Commands...
 
-echo "8 processos"
-mpirun -np 8 ./hello
+echo "2 processos"
+mpirun -np 2 ./$program
 echo
 
-echo "16 processos"
-mpirun -np 16 ./hello
-echo
+# echo "8 processos"
+# mpirun -np 8 ./$program
+# echo
 
-echo "32 processos"
-mpirun -np 32 ./hello
-echo
+# echo "16 processos"
+# mpirun -np 16 ./$program
+# echo
 
-echo "8 processos (bynode)"
-mpirun --map-by node -np 8 ./hello
-echo
+# echo "32 processos"
+# mpirun -np 32 ./$program
+# echo
 
-echo "16 processos (bynode)"
-mpirun --map-by node -np 16 ./hello
-echo
+# echo "8 processos (bynode)"
+# mpirun --map-by node -np 8 ./$program
+# echo
 
-echo "32 processos (bynode)"
-mpirun --map-by node -np 32 ./hello
-echo
+# echo "16 processos (bynode)"
+# mpirun --map-by node -np 16 ./$program
+# echo
+
+# echo "32 processos (bynode)"
+# mpirun --map-by node -np 32 ./$program
+# echo
 
 ################
 
