@@ -45,21 +45,8 @@
 # %u     User name.
 # %x     Job name.
 
-## different files for normal output end error output
-##SBATCH -o %x.%j.out -e %x.%j.err
-
-# or
-
 ## all output in same file
 #SBATCH -o %x.%j.out
-
-################
-
-################ Please, change this directory to your working dir.
-
-#SBATCH -D /home/pp030__/mpi/hello
-
-################
 
 ################
 echo Running on host `hostname`
