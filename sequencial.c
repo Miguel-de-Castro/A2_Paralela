@@ -67,7 +67,7 @@ int main(int argc, char *argv[])
 
         int chunkSize = SIZE / (p - 1);
 
-        printf("chunkSize - %d", chunkSize);
+        printf("chunkSize - %d \n", chunkSize);
 
         for (int i = 0; i < p - 1; ++i)
         {
@@ -82,7 +82,7 @@ int main(int argc, char *argv[])
             int offset, senderID;
             MPI_Recv(&offset, 1, MPI_INT, MPI_ANY_SOURCE, 0, MPI_COMM_WORLD, &status);
             senderID = status.MPI_SOURCE;
-             printf("senderID - %d", senderID);
+             printf("senderID - %d \n", senderID);
             MPI_Recv(&chunkSize, 1, MPI_INT, senderID, 0, MPI_COMM_WORLD, &status);
             MPI_Recv(&mres[offset][0], chunkSize * SIZE, MPI_INT, senderID, 0, MPI_COMM_WORLD, &status);
         }
