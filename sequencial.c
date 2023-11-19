@@ -72,9 +72,15 @@ int main(int argc, char *argv[])
         for (int i = 0; i < p - 1; ++i)
         {
             int offset = i * chunkSize;
+            // Ajuste para enviar linhas faltantes
+            int chunkSizeToSend = chunkSize;
+            if (i == p - 2 && (SIZE % (p - 1)) != 0) {
+                chunkSizeToSend += SIZE % (p - 1);
+            }
+            // Envia dados
             MPI_Send(&offset, 1, MPI_INT, i + 1, 0, MPI_COMM_WORLD);
-            MPI_Send(&chunkSize, 1, MPI_INT, i + 1, 0, MPI_COMM_WORLD);
-            MPI_Send(&m1[offset][0], chunkSize * SIZE, MPI_INT, i + 1, 0, MPI_COMM_WORLD);
+            MPI_Send(&chunkSizeToSend, 1, MPI_INT, i + 1, 0, MPI_COMM_WORLD);
+            MPI_Send(&m1[offset][0], chunkSizeToSend * SIZE, MPI_INT, i + 1, 0, MPI_COMM_WORLD);
         }
 
         for (int i = 0; i < p - 1; ++i)
@@ -90,7 +96,7 @@ int main(int argc, char *argv[])
         // OBTEM O TEMPO
     elapsed_time += MPI_Wtime();
     // MOSTRA O TEMPO DE EXECUCAO
-    printf("%lf", elapsed_time);
+    printf("%lf \n", elapsed_time);
 
         // VERIFICA SE O RESULTADO DA MULTIPLICACAO ESTA CORRETO
       for (i=0 ; i<SIZE; i++) {
@@ -153,7 +159,7 @@ int main(int argc, char *argv[])
         // OBTEM O TEMPO
     elapsed_time += MPI_Wtime();
     // MOSTRA O TEMPO DE EXECUCAO
-    printf("%lf", elapsed_time);
+    printf("%lf \n", elapsed_time);
     }
 
     /*
