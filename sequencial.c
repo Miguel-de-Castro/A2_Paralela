@@ -3,135 +3,178 @@
 
 #include <stdio.h>
 #include <stdlib.h>
+#include <omp.h>
 #include <mpi.h>
 
 #define MESTREID 0
 
 // DADOS COMPARTILHADOS
-int m1[SIZE][SIZE],m2[SIZE][SIZE],mres[SIZE][SIZE];
+int m1[SIZE][SIZE], m2[SIZE][SIZE], mres[SIZE][SIZE];
 int l1, c1, l2, c2, lres, cres;
 
-int main(int argc, char *argv[]) {
-    int    i, j, k, id, p;
+int main(int argc, char *argv[])
+{
+    int i, j, k, id, p;
     double elapsed_time;
     MPI_Status status;
 
-    MPI_Init(&argc,&argv);
+    MPI_Init(&argc, &argv);
     MPI_Comm_size(MPI_COMM_WORLD, &p);
     MPI_Comm_rank(MPI_COMM_WORLD, &id);
 
     // PREPARA PARA MEDIR TEMPO
-    elapsed_time = - MPI_Wtime ();
+    elapsed_time = -MPI_Wtime();
 
-    if (id == MESTREID) {
-        // INICIALIZA OS ARRAYS A SEREM MULTIPLICADOS   
+    if (id == MESTREID)
+    {
+        // INICIALIZA OS ARRAYS A SEREM MULTIPLICADOS
         l1 = c1 = SIZE;
         l2 = c2 = SIZE;
-        if (c1 != l2) {
-            fprintf(stderr,"Impossivel multiplicar matrizes: parametros invalidos.\n");
+        if (c1 != l2)
+        {
+            fprintf(stderr, "Impossivel multiplicar matrizes: parametros invalidos.\n");
             return 1;
         }
         lres = l1;
         cres = c2;
-        k=1;
-        for (i=0 ; i<SIZE; i++) {
-            for (j=0 ; j<SIZE; j++) {
-                if (k%2==0)
-                m1[i][j] = -k;
+        k = 1;
+        for (i = 0; i < SIZE; i++)
+        {
+            for (j = 0; j < SIZE; j++)
+            {
+                if (k % 2 == 0)
+                    m1[i][j] = -k;
                 else
-                m1[i][j] = k;
+                    m1[i][j] = k;
             }
             k++;
         }
-        k=1;
-        for (j=0 ; j<SIZE; j++) {
-            for (i=0 ; i<SIZE; i++) {
-                if (k%2==0)
-                m2[i][j] = -k;
+        k = 1;
+        for (j = 0; j < SIZE; j++)
+        {
+            for (i = 0; i < SIZE; i++)
+            {
+                if (k % 2 == 0)
+                    m2[i][j] = -k;
                 else
-                m2[i][j] = k;
+                    m2[i][j] = k;
             }
             k++;
         }
 
-        // Envia a M2 
+        // Envia a M2
         MPI_Bcast(&m2, SIZE * SIZE, MPI_INT, MESTREID, MPI_COMM_WORLD);
 
         int chunkSize = SIZE / (p - 1);
 
         printf("chunkSize - %d", chunkSize);
 
-        for (int i=0; i<p-1; ++i) {
+        for (int i = 0; i < p - 1; ++i)
+        {
             int offset = i * chunkSize;
-			MPI_Send(&offset,1,MPI_INT,i+1,0,MPI_COMM_WORLD);
-		}
-    
-    } else {
+            MPI_Send(&offset, 1, MPI_INT, i + 1, 0, MPI_COMM_WORLD);
+            MPI_Send(&chunkSize, 1, MPI_INT, i + 1, 0, MPI_COMM_WORLD);
+            MPI_Send(&m1[offset][0], chunkSize * SIZE, MPI_INT, i + 1, 0, MPI_COMM_WORLD);
+        }
+
+        for (int i = 0; i < p - 1; ++i)
+        {
+            int offset, senderID;
+            MPI_Recv(&offset, 1, MPI_INT, MPI_ANY_SOURCE, 0, MPI_COMM_WORLD, &status);
+            senderID = status.MPI_SOURCE;
+             printf("senderID - %d", senderID);
+            MPI_Recv(&chunkSize, 1, MPI_INT, senderID, 0, MPI_COMM_WORLD, &status);
+            MPI_Recv(&mres[offset][0], chunkSize * SIZE, MPI_INT, senderID, 0, MPI_COMM_WORLD, &status);
+        }
+    }
+    else
+    {
         MPI_Bcast(&m2, SIZE * SIZE, MPI_INT, MESTREID, MPI_COMM_WORLD);
         printf("\n");
-        for (i = 0; i < SIZE; i++) {
-            for (j = 0; j < SIZE; j++) {
-                 printf("id: %d - %d ", id, m2[i][j]);
+        for (i = 0; i < SIZE; i++)
+        {
+            for (j = 0; j < SIZE; j++)
+            {
+                printf("id: %d - %d ", id, m2[i][j]);
             }
             printf("\n");
         }
-        int offset;
+        int offset, chunkSize;
         MPI_Recv(&offset, 1, MPI_INT, MESTREID, 0, MPI_COMM_WORLD, &status);
+        MPI_Recv(&chunkSize, 1, MPI_INT, MESTREID, 0, MPI_COMM_WORLD, &status);
+        MPI_Recv(&m1[offset][0], chunkSize * SIZE, MPI_INT, MESTREID, 0, MPI_COMM_WORLD, &status);
+
+        #pragma omp parallel for
+        for (i = offset; i < chunkSize + offset; i++)
+        { 
+            for (j = 0; j < SIZE; j++)
+            {
+                mres[i][j] = 0;
+                for (k = 0; k < SIZE; k++)
+                { 
+                    mres[i][j] += m1[i][k] * m2[k][j];
+                }
+            }
+        }
+
+        MPI_Send(&offset, 1, MPI_INT, id, 0, MPI_COMM_WORLD);
+        MPI_Send(&chunkSize, 1, MPI_INT, id, 0, MPI_COMM_WORLD);
+        MPI_Send(&mres[offset][0], chunkSize * SIZE, MPI_INT, id, 0, MPI_COMM_WORLD);
+
         printf("\n");
         printf("id - %d, offset - %d", id, offset);
         printf("\n");
     }
 
-/*
-  // Enviar linhas atraves do MPI
+    /*
+      // Enviar linhas atraves do MPI
 
-  // REALIZA A MULTIPLICACAO
+      // REALIZA A MULTIPLICACAO
 
-  // i = var1 / lres = var2 (MPI)
-  for (i=0 ; i<lres; i++) { // OpenMP
-      for (j=0 ; j<cres; j++) { 
-          mres[i][j] = 0;
-          for (k=0 ; k<c1; k++) { // Escravo
-              mres[i][j] += m1[i][k] * m2[k][j];
+      // i = var1 / lres = var2 (MPI)
+      for (i=0 ; i<lres; i++) { // OpenMP
+          for (j=0 ; j<cres; j++) {
+              mres[i][j] = 0;
+              for (k=0 ; k<c1; k++) { // Escravo
+                  mres[i][j] += m1[i][k] * m2[k][j];
+              }
           }
       }
-  }
-*/
-  // OBTEM O TEMPO
-  elapsed_time += MPI_Wtime ();
-/*
-  // VERIFICA SE O RESULTADO DA MULTIPLICACAO ESTA CORRETO
-  for (i=0 ; i<SIZE; i++) {
-      k = SIZE*(i+1);
-      for (j=0 ; j<SIZE; j++) {
-          int k_col = k*(j+1);
-          if (i % 2 ==0) {
-             if (j % 2 == 0) {
-                if (mres[i][j]!=k_col)
-                   return 1;
-             }
-             else {
-                if (mres[i][j]!=-k_col)
-                   return 1;
-             }
+    */
+    // OBTEM O TEMPO
+    elapsed_time += MPI_Wtime();
+    /*
+      // VERIFICA SE O RESULTADO DA MULTIPLICACAO ESTA CORRETO
+      for (i=0 ; i<SIZE; i++) {
+          k = SIZE*(i+1);
+          for (j=0 ; j<SIZE; j++) {
+              int k_col = k*(j+1);
+              if (i % 2 ==0) {
+                 if (j % 2 == 0) {
+                    if (mres[i][j]!=k_col)
+                       return 1;
+                 }
+                 else {
+                    if (mres[i][j]!=-k_col)
+                       return 1;
+                 }
+              }
+              else {
+                 if (j % 2 == 0) {
+                    if (mres[i][j]!=-k_col)
+                       return 1;
+                 }
+                 else {
+                    if (mres[i][j]!=k_col)
+                       return 1;
+                 }
+              }
           }
-          else {
-             if (j % 2 == 0) {
-                if (mres[i][j]!=-k_col)
-                   return 1;
-             }
-             else {
-                if (mres[i][j]!=k_col)
-                   return 1;
-             }
-          }
-      } 
-  }
+      }
 
-*/
-  // MOSTRA O TEMPO DE EXECUCAO
-  printf("%lf",elapsed_time);
-  MPI_Finalize();
-  return 0;
-
+    */
+    // MOSTRA O TEMPO DE EXECUCAO
+    printf("%lf", elapsed_time);
+    MPI_Finalize();
+    return 0;
 }
