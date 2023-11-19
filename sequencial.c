@@ -142,9 +142,9 @@ int main(int argc, char *argv[])
             }
         }
 
-        MPI_Send(&offset, 1, MPI_INT, id, 0, MPI_COMM_WORLD);
-        MPI_Send(&chunkSize, 1, MPI_INT, id, 0, MPI_COMM_WORLD);
-        MPI_Send(&mres[offset][0], chunkSize * SIZE, MPI_INT, id, 0, MPI_COMM_WORLD);
+        MPI_Send(&offset, 1, MPI_INT, MESTREID, 0, MPI_COMM_WORLD);
+        MPI_Send(&chunkSize, 1, MPI_INT, MESTREID, 0, MPI_COMM_WORLD);
+        MPI_Send(&mres[offset][0], chunkSize * SIZE, MPI_INT, MESTREID, 0, MPI_COMM_WORLD);
 
         // printf("\n");
         // printf("id - %d, offset - %d", id, offset);
