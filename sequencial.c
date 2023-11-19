@@ -86,65 +86,13 @@ int main(int argc, char *argv[])
             MPI_Recv(&chunkSize, 1, MPI_INT, senderID, 0, MPI_COMM_WORLD, &status);
             MPI_Recv(&mres[offset][0], chunkSize * SIZE, MPI_INT, senderID, 0, MPI_COMM_WORLD, &status);
         }
-    }
-    else
-    {
-        MPI_Bcast(&m2, SIZE * SIZE, MPI_INT, MESTREID, MPI_COMM_WORLD);
-        printf("\n");
-        for (i = 0; i < SIZE; i++)
-        {
-            for (j = 0; j < SIZE; j++)
-            {
-                printf("id: %d - %d ", id, m2[i][j]);
-            }
-            printf("\n");
-        }
-        int offset, chunkSize;
-        MPI_Recv(&offset, 1, MPI_INT, MESTREID, 0, MPI_COMM_WORLD, &status);
-        MPI_Recv(&chunkSize, 1, MPI_INT, MESTREID, 0, MPI_COMM_WORLD, &status);
-        MPI_Recv(&m1[offset][0], chunkSize * SIZE, MPI_INT, MESTREID, 0, MPI_COMM_WORLD, &status);
 
-        #pragma omp parallel for
-        for (i = offset; i < chunkSize + offset; i++)
-        { 
-            for (j = 0; j < SIZE; j++)
-            {
-                mres[i][j] = 0;
-                for (k = 0; k < SIZE; k++)
-                { 
-                    mres[i][j] += m1[i][k] * m2[k][j];
-                }
-            }
-        }
-
-        MPI_Send(&offset, 1, MPI_INT, id, 0, MPI_COMM_WORLD);
-        MPI_Send(&chunkSize, 1, MPI_INT, id, 0, MPI_COMM_WORLD);
-        MPI_Send(&mres[offset][0], chunkSize * SIZE, MPI_INT, id, 0, MPI_COMM_WORLD);
-
-        printf("\n");
-        printf("id - %d, offset - %d", id, offset);
-        printf("\n");
-    }
-
-    /*
-      // Enviar linhas atraves do MPI
-
-      // REALIZA A MULTIPLICACAO
-
-      // i = var1 / lres = var2 (MPI)
-      for (i=0 ; i<lres; i++) { // OpenMP
-          for (j=0 ; j<cres; j++) {
-              mres[i][j] = 0;
-              for (k=0 ; k<c1; k++) { // Escravo
-                  mres[i][j] += m1[i][k] * m2[k][j];
-              }
-          }
-      }
-    */
-    // OBTEM O TEMPO
+        // OBTEM O TEMPO
     elapsed_time += MPI_Wtime();
-    /*
-      // VERIFICA SE O RESULTADO DA MULTIPLICACAO ESTA CORRETO
+    // MOSTRA O TEMPO DE EXECUCAO
+    printf("%lf", elapsed_time);
+
+        // VERIFICA SE O RESULTADO DA MULTIPLICACAO ESTA CORRETO
       for (i=0 ; i<SIZE; i++) {
           k = SIZE*(i+1);
           for (j=0 ; j<SIZE; j++) {
@@ -171,10 +119,58 @@ int main(int argc, char *argv[])
               }
           }
       }
+    }
+    else
+    {
+        MPI_Bcast(&m2, SIZE * SIZE, MPI_INT, MESTREID, MPI_COMM_WORLD);
+        printf("\n");
+        int offset, chunkSize;
+        MPI_Recv(&offset, 1, MPI_INT, MESTREID, 0, MPI_COMM_WORLD, &status);
+        MPI_Recv(&chunkSize, 1, MPI_INT, MESTREID, 0, MPI_COMM_WORLD, &status);
+        MPI_Recv(&m1[offset][0], chunkSize * SIZE, MPI_INT, MESTREID, 0, MPI_COMM_WORLD, &status);
 
-    */
+        #pragma omp parallel for
+        for (i = offset; i < chunkSize + offset; i++)
+        { 
+            for (j = 0; j < SIZE; j++)
+            {
+                mres[i][j] = 0;
+                for (k = 0; k < SIZE; k++)
+                { 
+                    mres[i][j] += m1[i][k] * m2[k][j];
+                }
+            }
+        }
+
+        MPI_Send(&offset, 1, MPI_INT, id, 0, MPI_COMM_WORLD);
+        MPI_Send(&chunkSize, 1, MPI_INT, id, 0, MPI_COMM_WORLD);
+        MPI_Send(&mres[offset][0], chunkSize * SIZE, MPI_INT, id, 0, MPI_COMM_WORLD);
+
+        // printf("\n");
+        // printf("id - %d, offset - %d", id, offset);
+        // printf("\n");
+
+        // OBTEM O TEMPO
+    elapsed_time += MPI_Wtime();
     // MOSTRA O TEMPO DE EXECUCAO
     printf("%lf", elapsed_time);
+    }
+
+    /*
+      // Enviar linhas atraves do MPI
+
+      // REALIZA A MULTIPLICACAO
+
+      // i = var1 / lres = var2 (MPI)
+      for (i=0 ; i<lres; i++) { // OpenMP
+          for (j=0 ; j<cres; j++) {
+              mres[i][j] = 0;
+              for (k=0 ; k<c1; k++) { // Escravo
+                  mres[i][j] += m1[i][k] * m2[k][j];
+              }
+          }
+      }
+    */
     MPI_Finalize();
     return 0;
 }
