@@ -95,6 +95,10 @@ int main(int argc, char *argv[])
             MPI_Recv(&mres[offset][0], chunkSize * SIZE, MPI_INT, senderID, 0, MPI_COMM_WORLD, &status);
         }
 
+        // OBTEM O TEMPO
+        elapsed_time += MPI_Wtime();
+        // MOSTRA O TEMPO DE EXECUCAO
+        printf("%lf \n", elapsed_time);
         // VERIFICA SE O RESULTADO DA MULTIPLICACAO ESTA CORRETO
         for (i = 0; i < SIZE; i++)
         {
@@ -161,12 +165,6 @@ int main(int argc, char *argv[])
         MPI_Send(&chunkSize, 1, MPI_INT, MESTREID, 0, MPI_COMM_WORLD);
         MPI_Send(&mres[offset][0], chunkSize * SIZE, MPI_INT, MESTREID, 0, MPI_COMM_WORLD);
     }
-
- // OBTEM O TEMPO
-        elapsed_time += MPI_Wtime();
-        // MOSTRA O TEMPO DE EXECUCAO
-        printf("%lf \n", elapsed_time);
-
     MPI_Finalize();
     return 0;
 }
