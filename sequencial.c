@@ -105,51 +105,34 @@ int main(int argc, char *argv[])
         printf("VERIFICA SE O RESULTADO DA MULTIPLICACAO ESTA CORRETO\n");
         for (i = 0; i < SIZE; i++)
         {
-            printf("aqui i - %d \n", i);
             k = SIZE * (i + 1);
             for (j = 0; j < SIZE; j++)
             {
                 int k_col = k * (j + 1);
-                printf("aqui j - %d \n", j);
                 if (i % 2 == 0)
                 {
-                    printf("line 116");
                     if (j % 2 == 0)
                     {
-                        printf("line 119\n");
-                        if (mres[i][j] != k_col){
-                            printf("Erro 1\n");
+                        if (mres[i][j] != k_col)
                             return 1;
-                        }
                     }
                     else
                     {
-                        printf("line 127\n");
-                        if (mres[i][j] != -k_col){
-                            printf("Erro 2\n");
+                        if (mres[i][j] != -k_col)
                             return 1;
-                        }
                     }
-                    printf("line 133\n");
                 }
                 else
                 {
-                    printf("line 137\n");
                     if (j % 2 == 0)
                     {
-                        printf("line 140\n");
-                        if (mres[i][j] != -k_col) {
-                            printf("Erro 3\n");
+                        if (mres[i][j] != -k_col)
                             return 1;
-                        }
                     }
                     else
                     {
-                        printf("line \n");
-                        if (mres[i][j] != k_col) {
-                            printf("Erro 4\n");
+                        if (mres[i][j] != k_col)
                             return 1;
-                        }
                     }
                 }
             }
