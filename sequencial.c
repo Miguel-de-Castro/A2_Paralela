@@ -144,7 +144,6 @@ int main(int argc, char *argv[])
         omp_set_num_threads(numThreads);
 
         MPI_Bcast(&m2, SIZE * SIZE, MPI_INT, MESTREID, MPI_COMM_WORLD);
-
         int offset, chunkSize;
         MPI_Recv(&offset, 1, MPI_INT, MESTREID, 0, MPI_COMM_WORLD, &status);
         MPI_Recv(&chunkSize, 1, MPI_INT, MESTREID, 0, MPI_COMM_WORLD, &status);
