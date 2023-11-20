@@ -137,7 +137,7 @@ int main(int argc, char *argv[])
                 }
             }
         }
-        printf("\nNodos: %d - Size: %d - Multiplicou certo!\n", p - 1, SIZE);
+        // printf("\nNodos: %d - Size: %d - Multiplicou certo!\n", p - 1, SIZE);
     }
     else
     {
