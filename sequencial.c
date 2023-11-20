@@ -95,7 +95,7 @@ int main(int argc, char *argv[])
         // OBTEM O TEMPO
         elapsed_time += MPI_Wtime();
         // MOSTRA O TEMPO DE EXECUCAO
-        printf("\nNodos: %d - Size: %d - Tempo: %lf \n", p - 1, SIZE, elapsed_time);
+        // printf("\nNodos: %d - Size: %d - Tempo: %lf \n", p - 1, SIZE, elapsed_time);
 
         // VERIFICA SE O RESULTADO DA MULTIPLICACAO ESTA CORRETO
         for (i = 0; i < SIZE; i++)
