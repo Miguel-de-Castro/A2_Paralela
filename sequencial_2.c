@@ -3,18 +3,19 @@
 #include <mpi.h>
 #include <omp.h>
 
-#define SIZE 1500
-
 int m1[SIZE][SIZE], m2[SIZE][SIZE], mres[SIZE][SIZE];
 int l1, c1, l2, c2, lres, cres;
 
 int main(int argc, char *argv[]) {
     int i, j, k, id, p;
     double elapsed_time;
+    MPI_Status status;
 
     MPI_Init(&argc, &argv);
     MPI_Comm_size(MPI_COMM_WORLD, &p);
     MPI_Comm_rank(MPI_COMM_WORLD, &id);
+
+    elapsed_time = -MPI_Wtime();
 
     if (p < 2) {
         fprintf(stderr, "Este programa requer pelo menos 2 processos MPI.\n");
