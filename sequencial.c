@@ -109,7 +109,7 @@ int main(int argc, char *argv[])
                     if (j % 2 == 0)
                     {
                         if (mres[i][j] != k_col){
-                            printf("Erro 1\n");
+                            printf("Erro 1 - i: %d, j: %d\n", i, j);
                             printf("%d",mres[i][j]);
                             printf("\n");
                             printf("%d",k_col);
@@ -120,7 +120,7 @@ int main(int argc, char *argv[])
                     else
                     {
                         if (mres[i][j] != -k_col){
-                            printf("Erro 2\n");
+                            printf("Erro 2 - i: %d, j: %d\n", i, j);
                             printf("%d",mres[i][j]);
                             printf("\n");
                             printf("%d",-k_col);
@@ -134,7 +134,7 @@ int main(int argc, char *argv[])
                     if (j % 2 == 0)
                     {
                         if (mres[i][j] != -k_col){
-                            printf("Erro 3\n");
+                            printf("Erro 3 - i: %d, j: %d\n", i, j);
                             printf("%d",mres[i][j]);
                             printf("\n");
                             printf("%d",-k_col);
@@ -145,7 +145,7 @@ int main(int argc, char *argv[])
                     else
                     {
                         if (mres[i][j] != k_col){
-                            printf("Erro 4\n");
+                            printf("Erro 4 - i: %d, j: %d\n", i, j);
                             printf("%d",mres[i][j]);
                             printf("\n");
                             printf("%d",k_col);
