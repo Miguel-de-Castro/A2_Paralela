@@ -152,7 +152,7 @@ int main(int argc, char *argv[])
         for (i = offset; i < chunkSize + offset; i++)
         {
             printf("Processo %d: Região paralela com 15 threads. Thread %d de %d\n",
-                   rank, omp_get_thread_num(), omp_get_num_threads());
+                   id, omp_get_thread_num(), omp_get_num_threads());
             for (j = 0; j < SIZE; j++)
             {
                 mres[i][j] = 0;
