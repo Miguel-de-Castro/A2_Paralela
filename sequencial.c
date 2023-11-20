@@ -65,7 +65,7 @@ int main(int argc, char *argv[])
         }
 
         // Envia a M2
-        // omp_set_num_threads(1);
+        omp_set_num_threads(1);
         MPI_Bcast(&m2, SIZE * SIZE, MPI_INT, MESTREID, MPI_COMM_WORLD);
 
         int chunkSize = SIZE / (p - 1);
@@ -77,14 +77,11 @@ int main(int argc, char *argv[])
             int offset = i * chunkSize;
             // Ajuste para enviar linhas faltantes
             int chunkSizeToSend = chunkSize;
-            int numTreads = 16;
             if (i == p - 2 && (SIZE % (p - 1)) != 0) {
                 chunkSizeToSend += SIZE % (p - 1);
-                // num
             }
             // Envia dados
             MPI_Send(&offset, 1, MPI_INT, i + 1, 0, MPI_COMM_WORLD);
-            // MPI_Send(&numTreads, 1, MPI_INT, i + 1, 0, MPI_COMM_WORLD);
             MPI_Send(&chunkSizeToSend, 1, MPI_INT, i + 1, 0, MPI_COMM_WORLD);
             MPI_Send(&m1[offset][0], chunkSizeToSend * SIZE, MPI_INT, i + 1, 0, MPI_COMM_WORLD);
         }
@@ -141,7 +138,11 @@ int main(int argc, char *argv[])
         MPI_Recv(&chunkSize, 1, MPI_INT, MESTREID, 0, MPI_COMM_WORLD, &status);
         MPI_Recv(&m1[offset][0], chunkSize * SIZE, MPI_INT, MESTREID, 0, MPI_COMM_WORLD, &status);
 
-        // omp_set_num_threads(1);
+        int numTreads = 16;
+        if (id == p - 1) {
+            numTreads--;
+        }
+        omp_set_num_threads(numTreads);
 
         #pragma omp parallel for
         for (i = offset; i < chunkSize + offset; i++)

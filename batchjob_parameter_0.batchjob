@@ -11,7 +11,6 @@
 ################ Change these parameters according to your requisites
 # nodes and tasks
 # SBATCH --ntasks 32
-#SBATCH --nodes 3
 # SBATCH --ntasks-per-node=16
 
 # time 
@@ -71,21 +70,29 @@ echo ################
 
 ############# Commands...
 
-# echo "1 node - 2 processos (bynode)"
-# mpirun --map-by node -np 2 ./$program-$size
-# echo
+#SBATCH --nodes 1
 
-# echo "2 node - 3 processos (bynode)"
-# mpirun --map-by node -np 3 ./$program-$size
-# echo
+echo "1 node - 2 processos (bynode)"
+mpirun --map-by node -np 2 ./$program-$size
+echo
+
+#SBATCH --nodes 2
+
+echo "2 node - 3 processos (bynode)"
+mpirun --map-by node -np 3 ./$program-$size
+echo
+
+#SBATCH --nodes 3
 
 echo "3 node - 4 processos (bynode)"
 mpirun --map-by node -np 4 ./$program-$size
 echo
 
-# echo "4 node - 5 processos (bynode)"
-# mpirun --map-by node -np 5 ./$program-$size
-# echo
+#SBATCH --nodes 4
+
+echo "4 node - 5 processos (bynode)"
+mpirun --map-by node -np 5 ./$program-$size
+echo
 
 ################
 
