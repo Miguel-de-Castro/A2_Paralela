@@ -108,26 +108,34 @@ int main(int argc, char *argv[])
                 {
                     if (j % 2 == 0)
                     {
-                        if (mres[i][j] != k_col)
+                        if (mres[i][j] != k_col){
+                            printf("Erro 1\n");
                             return 1;
+                        }
                     }
                     else
                     {
-                        if (mres[i][j] != -k_col)
+                        if (mres[i][j] != -k_col){
+                            printf("Erro 2\n");
                             return 1;
+                        }
                     }
                 }
                 else
                 {
                     if (j % 2 == 0)
                     {
-                        if (mres[i][j] != -k_col)
+                        if (mres[i][j] != -k_col){
+                            printf("Erro 3\n");
                             return 1;
+                        }
                     }
                     else
                     {
-                        if (mres[i][j] != k_col)
+                        if (mres[i][j] != k_col){
+                            printf("Erro 4\n");
                             return 1;
+                        }
                     }
                 }
             }
