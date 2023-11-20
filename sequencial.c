@@ -112,7 +112,7 @@ int main(int argc, char *argv[])
                             printf("Erro 1\n");
                             print(mres[i][j]);
                             printf("\n");
-                            print(!= k_col);
+                            print(k_col);
                             printf("\n");
                             return 1;
                         }
@@ -123,7 +123,7 @@ int main(int argc, char *argv[])
                             printf("Erro 2\n");
                             print(mres[i][j]);
                             printf("\n");
-                            print(!= -k_col);
+                            print(-k_col);
                             printf("\n");
                             return 1;
                         }
@@ -137,7 +137,7 @@ int main(int argc, char *argv[])
                             printf("Erro 3\n");
                             print(mres[i][j]);
                             printf("\n");
-                            print(!= -k_col);
+                            print(-k_col);
                             printf("\n");
                             return 1;
                         }
@@ -148,7 +148,7 @@ int main(int argc, char *argv[])
                             printf("Erro 4\n");
                             print(mres[i][j]);
                             printf("\n");
-                            print(!= k_col);
+                            print(k_col);
                             printf("\n");
                             return 1;
                         }
