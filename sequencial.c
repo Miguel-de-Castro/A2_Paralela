@@ -72,12 +72,10 @@ int main(int argc, char *argv[])
         {
             int offset = i * chunkSize;
             // Ajuste para enviar linhas faltantes
-            printf("id %d, chunkSize - %d \n", i + 1, chunkSize);
             int chunkSizeToSend = chunkSize;
             if (i == p - 2)
             {
                 chunkSizeToSend += SIZE % (p - 1);
-                printf("Ultimo: chunkSize - %d \n", chunkSizeToSend);
             }
             // Envia dados
             MPI_Send(&offset, 1, MPI_INT, i + 1, 0, MPI_COMM_WORLD);
