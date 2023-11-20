@@ -140,7 +140,7 @@ int main(int argc, char *argv[])
                 }
             }
         }
-        printf("Multiplicou certo!")
+        printf("\nMultiplicou certo!\n")
     }
     else
     {
