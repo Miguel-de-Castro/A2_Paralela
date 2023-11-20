@@ -151,8 +151,7 @@ int main(int argc, char *argv[])
 #pragma omp parallel for
         for (i = offset; i < chunkSize + offset; i++)
         {
-            printf("Processo %d: Thread %d de %d\n",
-                   id, omp_get_thread_num(), omp_get_num_threads());
+
             for (j = 0; j < SIZE; j++)
             {
                 mres[i][j] = 0;
