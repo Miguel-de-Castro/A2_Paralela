@@ -25,6 +25,8 @@ int main(int argc, char *argv[])
     // PREPARA PARA MEDIR TEMPO
     elapsed_time = -MPI_Wtime();
 
+    printf("p - %d \n", p);
+
     if (id == MESTREID)
     {
         // INICIALIZA OS ARRAYS A SEREM MULTIPLICADOS
@@ -63,6 +65,7 @@ int main(int argc, char *argv[])
         }
 
         // Envia a M2
+        // omp_set_num_threads(1);
         MPI_Bcast(&m2, SIZE * SIZE, MPI_INT, MESTREID, MPI_COMM_WORLD);
 
         int chunkSize = SIZE / (p - 1);
@@ -74,11 +77,14 @@ int main(int argc, char *argv[])
             int offset = i * chunkSize;
             // Ajuste para enviar linhas faltantes
             int chunkSizeToSend = chunkSize;
+            int numTreads = 16;
             if (i == p - 2 && (SIZE % (p - 1)) != 0) {
                 chunkSizeToSend += SIZE % (p - 1);
+                // num
             }
             // Envia dados
             MPI_Send(&offset, 1, MPI_INT, i + 1, 0, MPI_COMM_WORLD);
+            // MPI_Send(&numTreads, 1, MPI_INT, i + 1, 0, MPI_COMM_WORLD);
             MPI_Send(&chunkSizeToSend, 1, MPI_INT, i + 1, 0, MPI_COMM_WORLD);
             MPI_Send(&m1[offset][0], chunkSizeToSend * SIZE, MPI_INT, i + 1, 0, MPI_COMM_WORLD);
         }
@@ -134,6 +140,8 @@ int main(int argc, char *argv[])
         MPI_Recv(&offset, 1, MPI_INT, MESTREID, 0, MPI_COMM_WORLD, &status);
         MPI_Recv(&chunkSize, 1, MPI_INT, MESTREID, 0, MPI_COMM_WORLD, &status);
         MPI_Recv(&m1[offset][0], chunkSize * SIZE, MPI_INT, MESTREID, 0, MPI_COMM_WORLD, &status);
+
+        // omp_set_num_threads(1);
 
         #pragma omp parallel for
         for (i = offset; i < chunkSize + offset; i++)
