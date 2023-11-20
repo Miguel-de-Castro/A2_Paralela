@@ -113,29 +113,38 @@ int main(int argc, char *argv[])
                 printf("aqui j - %d \n", j);
                 if (i % 2 == 0)
                 {
+                    printf("line 116");
                     if (j % 2 == 0)
                     {
-                        if (mres[i][j] != k_col)
+                        printf("line 119");
+                        if (mres[i][j] != k_col){
                             printf("Erro 1");
                             return 1;
+                        }
                     }
                     else
                     {
-                        if (mres[i][j] != -k_col)
+                        printf("line 127");
+                        if (mres[i][j] != -k_col){
                             printf("Erro 2");
                             return 1;
+                        }
                     }
+                    printf("line 133");
                 }
                 else
                 {
+                    printf("line 137");
                     if (j % 2 == 0)
                     {
+                        printf("line 140");
                         if (mres[i][j] != -k_col)
                             printf("Erro 3");
                             return 1;
                     }
                     else
                     {
+                        printf("line 147");
                         if (mres[i][j] != k_col)
                             printf("Erro 4");
                             return 1;
