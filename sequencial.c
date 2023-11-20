@@ -147,7 +147,7 @@ int main(int argc, char *argv[])
         printf("id: %d, offset: %d\n", id, offset);
         MPI_Recv(&chunkSize, 1, MPI_INT, MESTREID, 0, MPI_COMM_WORLD, &status);
         MPI_Recv(&m1[offset][0], chunkSize * SIZE, MPI_INT, MESTREID, 0, MPI_COMM_WORLD, &status);
-
+         printf("de: %d, para: %d\n", offset, chunkSize + offset);
 #pragma omp parallel for
         for (i = offset; i < chunkSize + offset; i++)
         {
