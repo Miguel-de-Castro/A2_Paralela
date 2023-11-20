@@ -145,13 +145,14 @@ int main(int argc, char *argv[])
         MPI_Bcast(&m2, SIZE * SIZE, MPI_INT, MESTREID, MPI_COMM_WORLD);
         int offset, chunkSize;
         MPI_Recv(&offset, 1, MPI_INT, MESTREID, 0, MPI_COMM_WORLD, &status);
-        printf("id: %d, offset: %d\n", id, offset);
         MPI_Recv(&chunkSize, 1, MPI_INT, MESTREID, 0, MPI_COMM_WORLD, &status);
         MPI_Recv(&m1[offset][0], chunkSize * SIZE, MPI_INT, MESTREID, 0, MPI_COMM_WORLD, &status);
         
 #pragma omp parallel for
         for (i = offset; i < chunkSize + offset; i++)
         {
+            printf("Processo %d: Thread %d de %d\n",
+                   id, omp_get_thread_num(), omp_get_num_threads());
             for (j = 0; j < SIZE; j++)
             {
                 mres[i][j] = 0;
