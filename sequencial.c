@@ -96,10 +96,10 @@ int main(int argc, char *argv[])
             MPI_Recv(&mres[offset][0], chunkSize * SIZE, MPI_INT, senderID, 0, MPI_COMM_WORLD, &status);
         }
 
-        // // OBTEM O TEMPO
-        // elapsed_time += MPI_Wtime();
-        // // MOSTRA O TEMPO DE EXECUCAO
-        // printf("%lf \n", elapsed_time);
+        // OBTEM O TEMPO
+        elapsed_time += MPI_Wtime();
+        // MOSTRA O TEMPO DE EXECUCAO
+        printf("%lf \n", elapsed_time);
 
         // VERIFICA SE O RESULTADO DA MULTIPLICACAO ESTA CORRETO
         printf("VERIFICA SE O RESULTADO DA MULTIPLICACAO ESTA CORRETO\n");
@@ -143,10 +143,6 @@ int main(int argc, char *argv[])
                 }
             }
         }
-        // OBTEM O TEMPO
-        elapsed_time += MPI_Wtime();
-        // MOSTRA O TEMPO DE EXECUCAO
-        printf("%lf \n", elapsed_time);
         printf("\nMultiplicou certo!\n");
     }
     else
