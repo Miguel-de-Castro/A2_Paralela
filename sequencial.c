@@ -95,11 +95,9 @@ int main(int argc, char *argv[])
         // OBTEM O TEMPO
         elapsed_time += MPI_Wtime();
         // MOSTRA O TEMPO DE EXECUCAO
-        printf("%lf \n", elapsed_time);
         printf("\nNodos: %d - Size: %d - Tempo: %lf \n", p - 1, SIZE, elapsed_time);
 
         // VERIFICA SE O RESULTADO DA MULTIPLICACAO ESTA CORRETO
-        printf("VERIFICA SE O RESULTADO DA MULTIPLICACAO ESTA CORRETO\n");
         for (i = 0; i < SIZE; i++)
         {
             k = SIZE * (i + 1);
@@ -134,7 +132,6 @@ int main(int argc, char *argv[])
                 }
             }
         }
-        printf("\nMultiplicou certo!\n");
         printf("\nNodos: %d - Size: %d - Multiplicou certo!\n", p - 1, SIZE);
     }
     else
