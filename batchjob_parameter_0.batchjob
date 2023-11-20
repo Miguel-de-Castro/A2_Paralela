@@ -12,7 +12,7 @@
 # nodes and tasks
 #SBATCH --ntasks 32
 #SBATCH --nodes 2
-# SBATCH --ntasks-per-node=16
+#SBATCH --ntasks-per-node=16
 
 # time 
 #SBATCH -t 10
