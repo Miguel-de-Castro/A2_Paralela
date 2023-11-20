@@ -10,8 +10,8 @@
 
 ################ Change these parameters according to your requisites
 # nodes and tasks
-# SBATCH --ntasks 32
-#SBATCH --nodes 4
+#SBATCH --ntasks 16
+#SBATCH --nodes 2
 # SBATCH --ntasks-per-node=16
 
 # time 
