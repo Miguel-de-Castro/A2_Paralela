@@ -66,7 +66,7 @@ int main(int argc, char *argv[])
 
         // Envia a M2
         omp_set_num_threads(1);
-        printf("id - %d, numThreads- %d \n", id, omp_get_thread_num());
+        printf("id - %d, numThreads- %d \n", id, omp_get_num_thread());
         MPI_Bcast(&m2, SIZE * SIZE, MPI_INT, MESTREID, MPI_COMM_WORLD);
 
         int chunkSize = SIZE / (p - 1);
@@ -144,7 +144,7 @@ int main(int argc, char *argv[])
             numThreads--;
         }
         omp_set_num_threads(numThreads);
-        printf("id - %d, numThreads- %d \n", id, omp_get_thread_num());
+        printf("id - %d, numThreads- %d \n", id, omp_get_num_thread());
 
         #pragma omp parallel for
         for (i = offset; i < chunkSize + offset; i++)
