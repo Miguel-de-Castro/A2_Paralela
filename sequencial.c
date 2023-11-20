@@ -151,7 +151,6 @@ int main(int argc, char *argv[])
 #pragma omp parallel for
         for (i = offset; i < chunkSize + offset; i++)
         {
-
             for (j = 0; j < SIZE; j++)
             {
                 mres[i][j] = 0;
