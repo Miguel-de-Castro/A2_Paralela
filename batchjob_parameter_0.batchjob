@@ -65,8 +65,8 @@ echo Criado dir files_job_$SLURM_JOBID
 program=$1
 size=$2
 echo Running $program size $size
-# mpicc $program.c -o $program-$size -DSIZE=$size 
-mpicc $program.c -o $program-$size -DSIZE=$size -fopenmp
+mpicc $program.c -o $program-$size -DSIZE=$size 
+# mpicc $program.c -o $program-$size -DSIZE=$size -fopenmp
 echo ################
 
 ############# Commands...
