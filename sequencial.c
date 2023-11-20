@@ -105,6 +105,7 @@ int main(int argc, char *argv[])
         printf("VERIFICA SE O RESULTADO DA MULTIPLICACAO ESTA CORRETO\n");
         for (i = 0; i < SIZE; i++)
         {
+            printf("aqui i - %d \n", i)
             k = SIZE * (i + 1);
             for (j = 0; j < SIZE; j++)
             {
