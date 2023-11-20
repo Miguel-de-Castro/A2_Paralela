@@ -111,11 +111,13 @@ int main(int argc, char *argv[])
                     if (j % 2 == 0)
                     {
                         if (mres[i][j] != k_col)
+                            printf("Erro 1");
                             return 1;
                     }
                     else
                     {
                         if (mres[i][j] != -k_col)
+                            printf("Erro 2");
                             return 1;
                     }
                 }
@@ -124,11 +126,13 @@ int main(int argc, char *argv[])
                     if (j % 2 == 0)
                     {
                         if (mres[i][j] != -k_col)
+                            printf("Erro 3");
                             return 1;
                     }
                     else
                     {
                         if (mres[i][j] != k_col)
+                            printf("Erro 4");
                             return 1;
                     }
                 }
