@@ -105,12 +105,12 @@ int main(int argc, char *argv[])
         printf("VERIFICA SE O RESULTADO DA MULTIPLICACAO ESTA CORRETO\n");
         for (i = 0; i < SIZE; i++)
         {
-            printf("aqui i - %d \n", i)
+            printf("aqui i - %d \n", i);
             k = SIZE * (i + 1);
             for (j = 0; j < SIZE; j++)
             {
                 int k_col = k * (j + 1);
-                printf("aqui j - %d \n", j)
+                printf("aqui j - %d \n", j);
                 if (i % 2 == 0)
                 {
                     if (j % 2 == 0)
