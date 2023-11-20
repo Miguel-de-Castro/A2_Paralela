@@ -96,11 +96,11 @@ int main(int argc, char *argv[])
             MPI_Recv(&mres[offset][0], chunkSize * SIZE, MPI_INT, senderID, 0, MPI_COMM_WORLD, &status);
         }
 
-        // OBTEM O TEMPO
-        elapsed_time += MPI_Wtime();
-        // MOSTRA O TEMPO DE EXECUCAO
-        printf("%lf \n", elapsed_time);
-        // VERIFICA SE O RESULTADO DA MULTIPLICACAO ESTA CORRETO
+        // // OBTEM O TEMPO
+        // elapsed_time += MPI_Wtime();
+        // // MOSTRA O TEMPO DE EXECUCAO
+        // printf("%lf \n", elapsed_time);
+        // // VERIFICA SE O RESULTADO DA MULTIPLICACAO ESTA CORRETO
         for (i = 0; i < SIZE; i++)
         {
             k = SIZE * (i + 1);
@@ -139,6 +139,11 @@ int main(int argc, char *argv[])
                 }
             }
         }
+        // OBTEM O TEMPO
+        elapsed_time += MPI_Wtime();
+        // MOSTRA O TEMPO DE EXECUCAO
+        printf("%lf \n", elapsed_time);
+        // VERIFICA SE O RESULTADO DA MULTIPLICACAO ESTA CORRETO
     }
     else
     {
@@ -158,7 +163,7 @@ int main(int argc, char *argv[])
 #pragma omp parallel for
         for (i = offset; i < chunkSize + offset; i++)
         {
-            printf("Processo %d: Região paralela com 15 threads. Thread %d de %d\n",
+            printf("Processo %d: Thread %d de %d\n",
                    id, omp_get_thread_num(), omp_get_num_threads());
             for (j = 0; j < SIZE; j++)
             {
@@ -173,6 +178,11 @@ int main(int argc, char *argv[])
         MPI_Send(&offset, 1, MPI_INT, MESTREID, 0, MPI_COMM_WORLD);
         MPI_Send(&chunkSize, 1, MPI_INT, MESTREID, 0, MPI_COMM_WORLD);
         MPI_Send(&mres[offset][0], chunkSize * SIZE, MPI_INT, MESTREID, 0, MPI_COMM_WORLD);
+        // OBTEM O TEMPO
+        elapsed_time += MPI_Wtime();
+        // MOSTRA O TEMPO DE EXECUCAO
+        printf("%lf \n", elapsed_time);
+        // VERIFICA SE O RESULTADO DA MULTIPLICACAO ESTA CORRETO
     }
     MPI_Finalize();
     return 0;
