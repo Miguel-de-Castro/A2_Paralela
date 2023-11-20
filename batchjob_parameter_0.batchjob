@@ -83,9 +83,9 @@ echo
 
 # #SBATCH --nodes 3
 
-echo "3 node - 4 processos (bynode)"
-mpirun --map-by node -np 4 ./$program-$size
-echo
+# echo "3 node - 4 processos (bynode)"
+# mpirun --map-by node -np 4 ./$program-$size
+# echo
 
 # #SBATCH --nodes 4
 
