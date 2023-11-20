@@ -25,6 +25,8 @@ int main(int argc, char *argv[])
     // PREPARA PARA MEDIR TEMPO
     elapsed_time = -MPI_Wtime();
 
+    printf("p - %d \n", p);
+
     if (id == MESTREID)
     {
         // INICIALIZA OS ARRAYS A SEREM MULTIPLICADOS
@@ -72,10 +74,12 @@ int main(int argc, char *argv[])
         {
             int offset = i * chunkSize;
             // Ajuste para enviar linhas faltantes
+            printf("id %d, chunkSize - %d \n", i + 1, chunkSize);
             int chunkSizeToSend = chunkSize;
             if (i == p - 2)
             {
                 chunkSizeToSend += SIZE % (p - 1);
+                printf("Ultimo: chunkSize - %d \n", chunkSizeToSend);
             }
             // Envia dados
             MPI_Send(&offset, 1, MPI_INT, i + 1, 0, MPI_COMM_WORLD);
@@ -95,9 +99,10 @@ int main(int argc, char *argv[])
         // OBTEM O TEMPO
         elapsed_time += MPI_Wtime();
         // MOSTRA O TEMPO DE EXECUCAO
-        // printf("\nNodos: %d - Size: %d - Tempo: %lf \n", p - 1, SIZE, elapsed_time);
+        printf("%lf \n", elapsed_time);
 
         // VERIFICA SE O RESULTADO DA MULTIPLICACAO ESTA CORRETO
+        printf("VERIFICA SE O RESULTADO DA MULTIPLICACAO ESTA CORRETO\n");
         for (i = 0; i < SIZE; i++)
         {
             k = SIZE * (i + 1);
@@ -108,40 +113,31 @@ int main(int argc, char *argv[])
                 {
                     if (j % 2 == 0)
                     {
-                        if (mres[i][j] != k_col){
-                            printf("Erro 1\n");
+                        if (mres[i][j] != k_col)
                             return 1;
-                        }
                     }
                     else
                     {
-                        if (mres[i][j] != -k_col){
-                            printf("Erro 2\n");
+                        if (mres[i][j] != -k_col)
                             return 1;
-                        }
                     }
                 }
                 else
                 {
                     if (j % 2 == 0)
                     {
-                        if (mres[i][j] != -k_col) {
-                            printf("Erro 3\n");
+                        if (mres[i][j] != -k_col)
                             return 1;
-                        }
                     }
                     else
                     {
-                        if (mres[i][j] != k_col) {
-                            printf("Erro 4\n");
+                        if (mres[i][j] != k_col)
                             return 1;
-                        }
                     }
                 }
             }
         }
-
-        // printf("\nNodos: %d - Size: %d - Multiplicou certo!\n", p - 1, SIZE);
+        printf("\nMultiplicou certo!\n");
     }
     else
     {
@@ -152,17 +148,17 @@ int main(int argc, char *argv[])
         omp_set_num_threads(numThreads);
 
         MPI_Bcast(&m2, SIZE * SIZE, MPI_INT, MESTREID, MPI_COMM_WORLD);
-
         int offset, chunkSize;
         MPI_Recv(&offset, 1, MPI_INT, MESTREID, 0, MPI_COMM_WORLD, &status);
+        printf("id: %d, offset: %d\n", id, offset);
         MPI_Recv(&chunkSize, 1, MPI_INT, MESTREID, 0, MPI_COMM_WORLD, &status);
         MPI_Recv(&m1[offset][0], chunkSize * SIZE, MPI_INT, MESTREID, 0, MPI_COMM_WORLD, &status);
-
+        
 #pragma omp parallel for
         for (i = offset; i < chunkSize + offset; i++)
         {
-            // printf("Processo %d: Thread %d de %d\n",
-            //        id, omp_get_thread_num(), omp_get_num_threads());
+            printf("Processo %d: Thread %d de %d\n",
+                   id, omp_get_thread_num(), omp_get_num_threads());
             for (j = 0; j < SIZE; j++)
             {
                 mres[i][j] = 0;
