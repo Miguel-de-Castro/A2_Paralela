@@ -143,7 +143,7 @@ int main(int argc, char *argv[])
         if (id == p - 1) {
             numThreads--;
         }
-        omp_set_num_threads(numThreads);
+        omp_set_num_threads(&numThreads);
         printf("id - %d, numThreads- %d \n", id, omp_get_num_threads());
 
         #pragma omp parallel for
