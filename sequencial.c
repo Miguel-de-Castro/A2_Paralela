@@ -69,12 +69,11 @@ int main(int argc, char *argv[])
 
         int chunkSize = SIZE / (p - 1);
 
-        printf("chunkSize - %d \n", chunkSize);
-
         for (int i = 0; i < p - 1; ++i)
         {
             int offset = i * chunkSize;
             // Ajuste para enviar linhas faltantes
+            printf("id %d, chunkSize - %d \n", i + 1, chunkSize);
             int chunkSizeToSend = chunkSize;
             if (i == p - 2)
             {
