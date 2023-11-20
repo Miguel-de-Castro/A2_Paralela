@@ -25,8 +25,6 @@ int main(int argc, char *argv[])
     // PREPARA PARA MEDIR TEMPO
     elapsed_time = -MPI_Wtime();
 
-    printf("p - %d \n", p);
-
     if (id == MESTREID)
     {
         // INICIALIZA OS ARRAYS A SEREM MULTIPLICADOS
