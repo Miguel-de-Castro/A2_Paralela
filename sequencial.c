@@ -102,6 +102,7 @@ int main(int argc, char *argv[])
         // printf("%lf \n", elapsed_time);
 
         // VERIFICA SE O RESULTADO DA MULTIPLICACAO ESTA CORRETO
+        printf("VERIFICA SE O RESULTADO DA MULTIPLICACAO ESTA CORRETO");
         for (i = 0; i < SIZE; i++)
         {
             k = SIZE * (i + 1);
