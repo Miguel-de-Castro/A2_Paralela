@@ -110,9 +110,9 @@ int main(int argc, char *argv[])
                     {
                         if (mres[i][j] != k_col){
                             printf("Erro 1\n");
-                            print(mres[i][j]);
+                            printf(mres[i][j]);
                             printf("\n");
-                            print(k_col);
+                            printf(k_col);
                             printf("\n");
                             return 1;
                         }
@@ -121,9 +121,9 @@ int main(int argc, char *argv[])
                     {
                         if (mres[i][j] != -k_col){
                             printf("Erro 2\n");
-                            print(mres[i][j]);
+                            printf(mres[i][j]);
                             printf("\n");
-                            print(-k_col);
+                            printf(-k_col);
                             printf("\n");
                             return 1;
                         }
@@ -135,9 +135,9 @@ int main(int argc, char *argv[])
                     {
                         if (mres[i][j] != -k_col){
                             printf("Erro 3\n");
-                            print(mres[i][j]);
+                            printf(mres[i][j]);
                             printf("\n");
-                            print(-k_col);
+                            printf(-k_col);
                             printf("\n");
                             return 1;
                         }
@@ -146,9 +146,9 @@ int main(int argc, char *argv[])
                     {
                         if (mres[i][j] != k_col){
                             printf("Erro 4\n");
-                            print(mres[i][j]);
+                            printf(mres[i][j]);
                             printf("\n");
-                            print(k_col);
+                            printf(k_col);
                             printf("\n");
                             return 1;
                         }
