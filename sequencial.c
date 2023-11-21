@@ -98,40 +98,40 @@ int main(int argc, char *argv[])
         printf("\nNodos: %d - Size: %d - Tempo: %lf \n", p - 1, SIZE, elapsed_time);
 
         // VERIFICA SE O RESULTADO DA MULTIPLICACAO ESTA CORRETO
-        // for (i = 0; i < SIZE; i++)
-        // {
-        //     k = SIZE * (i + 1);
-        //     for (j = 0; j < SIZE; j++)
-        //     {
-        //         int k_col = k * (j + 1);
-        //         if (i % 2 == 0)
-        //         {
-        //             if (j % 2 == 0)
-        //             {
-        //                 if (mres[i][j] != k_col)
-        //                     return 1;
-        //             }
-        //             else
-        //             {
-        //                 if (mres[i][j] != -k_col)
-        //                     return 1;
-        //             }
-        //         }
-        //         else
-        //         {
-        //             if (j % 2 == 0)
-        //             {
-        //                 if (mres[i][j] != -k_col)
-        //                     return 1;
-        //             }
-        //             else
-        //             {
-        //                 if (mres[i][j] != k_col)
-        //                     return 1;
-        //             }
-        //         }
-        //     }
-        // }
+        for (i = 0; i < SIZE; i++)
+        {
+            k = SIZE * (i + 1);
+            for (j = 0; j < SIZE; j++)
+            {
+                int k_col = k * (j + 1);
+                if (i % 2 == 0)
+                {
+                    if (j % 2 == 0)
+                    {
+                        if (mres[i][j] != k_col)
+                            return 1;
+                    }
+                    else
+                    {
+                        if (mres[i][j] != -k_col)
+                            return 1;
+                    }
+                }
+                else
+                {
+                    if (j % 2 == 0)
+                    {
+                        if (mres[i][j] != -k_col)
+                            return 1;
+                    }
+                    else
+                    {
+                        if (mres[i][j] != k_col)
+                            return 1;
+                    }
+                }
+            }
+        }
         printf("\nNodos: %d - Size: %d - Multiplicou certo!\n", p - 1, SIZE);
     }
     else
