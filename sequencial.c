@@ -98,13 +98,13 @@ int main(int argc, char *argv[])
         // MOSTRA O TEMPO DE EXECUCAO
         printf("\nNodos: %d - Size: %d - Tempo: %lf \n", p - 1, SIZE, elapsed_time);
 
-        // printf("Matriz Resultante (mres):\n");
-        // for (int i = 0; i < SIZE; i++) {
-        //     for (int j = 0; j < SIZE; j++) {
-        //         printf("%d ", mres[i][j]);
-        //     }
-        //     printf("\n");
-        // }
+        printf("Matriz Resultante Mestre (mres):\n");
+        for (int i = 0; i < SIZE; i++) {
+            for (int j = 0; j < SIZE; j++) {
+                printf("%d ", mres[i][j]);
+            }
+            printf("\n");
+        }
 
         // VERIFICA SE O RESULTADO DA MULTIPLICACAO ESTA CORRETO
         for (i = 0; i < SIZE; i++)
