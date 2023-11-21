@@ -79,6 +79,9 @@ int main(int argc, char *argv[])
             printf("\n");
         }
 
+        printf("\n");
+        printf("\n");
+
         // PREPARA PARA MEDIR TEMPO
         elapsed_time = -MPI_Wtime();
 
@@ -185,6 +188,15 @@ int main(int argc, char *argv[])
         omp_set_num_threads(numThreads);
 
         MPI_Bcast(&m2, SIZE * SIZE, MPI_INT, MESTREID, MPI_COMM_WORLD);
+
+        printf("%d - Recebeu m2 (mres):\n", id);
+        for (int i = 0; i < SIZE; i++) {
+            for (int j = 0; j < SIZE; j++) {
+                printf("%d ", m2[i][j]);
+            }
+            printf("\n");
+        }
+
         int offset2, chunkSize2;
         MPI_Recv(&offset2, 1, MPI_INT, MESTREID, 0, MPI_COMM_WORLD, &status);
         MPI_Recv(&chunkSize2, 1, MPI_INT, MESTREID, 0, MPI_COMM_WORLD, &status);
