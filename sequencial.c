@@ -172,6 +172,8 @@ int main(int argc, char *argv[])
             }
         }
 
+        printf("Sou o %d, offset: %d, chunkSize: %d", id, offset2, chunkSize2);
+
         printf("Matriz Resultante (mres):\n");
         for (int i = 0; i < SIZE; i++) {
             for (int j = 0; j < SIZE; j++) {
