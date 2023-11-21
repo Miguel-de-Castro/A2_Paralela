@@ -78,7 +78,7 @@ echo ################
 # echo
 
 echo "2 node - 3 processos (bynode)"
-mpirun --map-by node -np 3 ./$program-$size
+mpirun -np 3 --map-by node ./$program-$size
 echo
 
 # #SBATCH --nodes 3

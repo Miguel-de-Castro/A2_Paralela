@@ -22,21 +22,19 @@ int main(int argc, char *argv[])
     MPI_Comm_size(MPI_COMM_WORLD, &p);
     MPI_Comm_rank(MPI_COMM_WORLD, &id);
 
-    // PREPARA PARA MEDIR TEMPO
-    elapsed_time = -MPI_Wtime();
-
+    // INICIALIZA OS ARRAYS A SEREM MULTIPLICADOS
+    l1 = c1 = SIZE;
+    l2 = c2 = SIZE;
+    if (c1 != l2)
+    {
+        fprintf(stderr, "Impossivel multiplicar matrizes: parametros invalidos.\n");
+        return 1;
+    }
+    lres = l1;
+    cres = c2;
+    
     if (id == MESTREID)
     {
-        // INICIALIZA OS ARRAYS A SEREM MULTIPLICADOS
-        l1 = c1 = SIZE;
-        l2 = c2 = SIZE;
-        if (c1 != l2)
-        {
-            fprintf(stderr, "Impossivel multiplicar matrizes: parametros invalidos.\n");
-            return 1;
-        }
-        lres = l1;
-        cres = c2;
         k = 1;
         for (i = 0; i < SIZE; i++)
         {
@@ -61,6 +59,9 @@ int main(int argc, char *argv[])
             }
             k++;
         }
+
+        // PREPARA PARA MEDIR TEMPO
+        elapsed_time = -MPI_Wtime();
 
         // Envia a M2
         omp_set_num_threads(1);
