@@ -174,6 +174,14 @@ int main(int argc, char *argv[])
 
         printf("Sou o %d, offset: %d, chunkSize: %d\n", id, offset2, chunkSize2);
 
+        printf("Matriz Resultante (mres):\n");
+        for (int i = 0; i < SIZE; i++) {
+            for (int j = 0; j < SIZE; j++) {
+                printf("%d - %d ", id, mres[i][j]);
+            }
+            printf("\n");
+        }
+
         MPI_Send(&offset2, 1, MPI_INT, MESTREID, 0, MPI_COMM_WORLD);
         MPI_Send(&chunkSize2, 1, MPI_INT, MESTREID, 0, MPI_COMM_WORLD);
         MPI_Send(&mres[offset2][0], chunkSize2 * SIZE, MPI_INT, MESTREID, 0, MPI_COMM_WORLD);
