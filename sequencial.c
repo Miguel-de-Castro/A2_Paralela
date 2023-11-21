@@ -205,10 +205,10 @@ int main(int argc, char *argv[])
         MPI_Recv(&chunkSize2, 1, MPI_INT, MESTREID, 0, MPI_COMM_WORLD, &status);
         MPI_Recv(&m1[offset2][0], chunkSize2 * SIZE, MPI_INT, MESTREID, 0, MPI_COMM_WORLD, &status);
 
-        printf("%d - Recebeu m2 (mres):\n", id);
+        printf("%d - Recebeu m1 (mres):\n", id);
         for (int i = 0; i < SIZE; i++) {
             for (int j = 0; j < SIZE; j++) {
-                printf("%d - %d ", id, m2[i][j]);
+                printf("%d - %d ", id, m1[i][j]);
             }
             printf("\n");
         }
