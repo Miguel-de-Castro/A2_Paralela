@@ -83,14 +83,14 @@ int main(int argc, char *argv[])
             MPI_Send(&m1[offset][0], chunkSizeToSend * SIZE, MPI_INT, i, 0, MPI_COMM_WORLD);
         }
 
-        //for (int i = 0; i < p - 1; ++i)
-        //{
+        for (int i = 0; i < p - 1; ++i)
+        {
             int offset, senderID;
             MPI_Recv(&offset, 1, MPI_INT, MPI_ANY_SOURCE, 0, MPI_COMM_WORLD, &status);
             senderID = status.MPI_SOURCE;
             MPI_Recv(&chunkSize, 1, MPI_INT, senderID, 0, MPI_COMM_WORLD, &status);
             MPI_Recv(&mres[offset][0], chunkSize * SIZE, MPI_INT, senderID, 0, MPI_COMM_WORLD, &status);
-        //}
+        }
 
         // OBTEM O TEMPO
         elapsed_time += MPI_Wtime();
@@ -157,7 +157,7 @@ int main(int argc, char *argv[])
         MPI_Recv(&chunkSize, 1, MPI_INT, MESTREID, 0, MPI_COMM_WORLD, &status);
         MPI_Recv(&m1[offset][0], chunkSize * SIZE, MPI_INT, MESTREID, 0, MPI_COMM_WORLD, &status);
 
-#pragma omp parallel for
+//#pragma omp parallel for
         for (i = offset; i < chunkSize + offset; i++)
         {
 
