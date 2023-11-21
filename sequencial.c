@@ -184,7 +184,7 @@ int main(int argc, char *argv[])
                 for (k = 0; k < SIZE; k++)
                 {
                     if(i == 0){
-                        printf("i: %d, j: %d, k: %d, m1[i][k]: %d, m2[k][j]: %d\n", i, j, k, m1[i][k], m2[k][j]);
+                        // printf("i: %d, j: %d, k: %d, m1[i][k]: %d, m2[k][j]: %d\n", i, j, k, m1[i][k], m2[k][j]);
                     }
                     mres[i][j] += m1[i][k] * m2[k][j];
                 }
