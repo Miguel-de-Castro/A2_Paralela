@@ -60,6 +60,25 @@ int main(int argc, char *argv[])
             k++;
         }
 
+        printf("Matriz m1 (mres):\n");
+        for (int i = 0; i < SIZE; i++) {
+            for (int j = 0; j < SIZE; j++) {
+                printf("%d ", m1[i][j]);
+            }
+            printf("\n");
+        }
+
+        printf("\n");
+        printf("\n");
+
+        printf("Matriz m2 (mres):\n");
+        for (int i = 0; i < SIZE; i++) {
+            for (int j = 0; j < SIZE; j++) {
+                printf("%d ", m2[i][j]);
+            }
+            printf("\n");
+        }
+
         // PREPARA PARA MEDIR TEMPO
         elapsed_time = -MPI_Wtime();
 
@@ -110,7 +129,7 @@ int main(int argc, char *argv[])
         printf("\n");
 
         // VERIFICA SE O RESULTADO DA MULTIPLICACAO ESTA CORRETO
-        printf("Matriz Verifica Mestre :\n");
+        // printf("Matriz Verifica Mestre :\n");
         for (i = 0; i < SIZE; i++)
         {
             k = SIZE * (i + 1);
@@ -121,14 +140,14 @@ int main(int argc, char *argv[])
                 {
                     if (j % 2 == 0)
                     {
-                        printf("%d ", k_col);
+                        // printf("%d ", k_col);
                         
                         if (mres[i][j] != k_col)
                             return 1;
                     }
                     else
                     {
-                        printf("%d ", -k_col);
+                        // printf("%d ", -k_col);
 
                         if (mres[i][j] != -k_col)
                             return 1;
@@ -138,21 +157,21 @@ int main(int argc, char *argv[])
                 {
                     if (j % 2 == 0)
                     {
-                        printf("%d ", -k_col);
+                        // printf("%d ", -k_col);
 
                         if (mres[i][j] != -k_col)
                             return 1;
                     }
                     else
                     {
-                        printf("%d ", k_col);
+                        // printf("%d ", k_col);
 
                         if (mres[i][j] != k_col)
                             return 1;
                     }
                 }
             }
-            printf("\n");
+            // printf("\n");
         }
         printf("\nNodos: %d - Size: %d - Multiplicou certo!\n", p - 1, SIZE);
     }
