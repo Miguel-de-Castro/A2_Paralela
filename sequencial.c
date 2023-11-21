@@ -197,10 +197,25 @@ int main(int argc, char *argv[])
             printf("\n");
         }
 
+        printf("\n");
+        printf("\n");
+
         int offset2, chunkSize2;
         MPI_Recv(&offset2, 1, MPI_INT, MESTREID, 0, MPI_COMM_WORLD, &status);
         MPI_Recv(&chunkSize2, 1, MPI_INT, MESTREID, 0, MPI_COMM_WORLD, &status);
         MPI_Recv(&m1[offset2][0], chunkSize2 * SIZE, MPI_INT, MESTREID, 0, MPI_COMM_WORLD, &status);
+
+        printf("%d - Recebeu m2 (mres):\n", id);
+        for (int i = 0; i < SIZE; i++) {
+            for (int j = 0; j < SIZE; j++) {
+                printf("%d - %d ", id, m2[i][j]);
+            }
+            printf("\n");
+        }
+
+        printf("\n");
+        printf("\n");
+
 
 #pragma omp parallel for
         for (i = offset2; i < chunkSize2 + offset2; i++)
