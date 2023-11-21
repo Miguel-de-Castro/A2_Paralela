@@ -152,13 +152,13 @@ int main(int argc, char *argv[])
         omp_set_num_threads(numThreads);
 
         MPI_Bcast(&m2, SIZE * SIZE, MPI_INT, MESTREID, MPI_COMM_WORLD);
-        int offset, chunkSize;
-        MPI_Recv(&offset, 1, MPI_INT, MESTREID, 0, MPI_COMM_WORLD, &status);
-        MPI_Recv(&chunkSize, 1, MPI_INT, MESTREID, 0, MPI_COMM_WORLD, &status);
-        MPI_Recv(&m1[offset][0], chunkSize * SIZE, MPI_INT, MESTREID, 0, MPI_COMM_WORLD, &status);
+        int offset2, chunkSize2;
+        MPI_Recv(&offset2, 1, MPI_INT, MESTREID, 0, MPI_COMM_WORLD, &status);
+        MPI_Recv(&chunkSize2, 1, MPI_INT, MESTREID, 0, MPI_COMM_WORLD, &status);
+        MPI_Recv(&m1[offset2][0], chunkSize2 * SIZE, MPI_INT, MESTREID, 0, MPI_COMM_WORLD, &status);
 
 //#pragma omp parallel for
-        for (i = offset; i < chunkSize + offset; i++)
+        for (i = offset2; i < chunkSize2 + offset2; i++)
         {
 
             for (j = 0; j < SIZE; j++)
@@ -171,9 +171,9 @@ int main(int argc, char *argv[])
             }
         }
 
-        MPI_Send(&offset, 1, MPI_INT, MESTREID, 0, MPI_COMM_WORLD);
-        MPI_Send(&chunkSize, 1, MPI_INT, MESTREID, 0, MPI_COMM_WORLD);
-        MPI_Send(&mres[offset][0], chunkSize * SIZE, MPI_INT, MESTREID, 0, MPI_COMM_WORLD);
+        MPI_Send(&offset2, 1, MPI_INT, MESTREID, 0, MPI_COMM_WORLD);
+        MPI_Send(&chunkSize2, 1, MPI_INT, MESTREID, 0, MPI_COMM_WORLD);
+        MPI_Send(&mres[offset2][0], chunkSize2 * SIZE, MPI_INT, MESTREID, 0, MPI_COMM_WORLD);
     }
     MPI_Finalize();
     return 0;
