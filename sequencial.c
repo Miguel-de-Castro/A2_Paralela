@@ -97,6 +97,14 @@ int main(int argc, char *argv[])
         // MOSTRA O TEMPO DE EXECUCAO
         printf("\nNodos: %d - Size: %d - Tempo: %lf \n", p - 1, SIZE, elapsed_time);
 
+        printf("Matriz Resultante (mres):\n");
+        for (int i = 0; i < SIZE; i++) {
+            for (int j = 0; j < SIZE; j++) {
+                printf("%d ", mres[i][j]);
+            }
+            printf("\n");
+        }
+
         // VERIFICA SE O RESULTADO DA MULTIPLICACAO ESTA CORRETO
         for (i = 0; i < SIZE; i++)
         {
@@ -137,7 +145,8 @@ int main(int argc, char *argv[])
     else
     {
         int numThreads = 16;
-        if (id == p - 1) {
+        if (id == p - 1)
+        {
             numThreads--;
         }
         omp_set_num_threads(numThreads);
@@ -147,7 +156,7 @@ int main(int argc, char *argv[])
         MPI_Recv(&offset, 1, MPI_INT, MESTREID, 0, MPI_COMM_WORLD, &status);
         MPI_Recv(&chunkSize, 1, MPI_INT, MESTREID, 0, MPI_COMM_WORLD, &status);
         MPI_Recv(&m1[offset][0], chunkSize * SIZE, MPI_INT, MESTREID, 0, MPI_COMM_WORLD, &status);
-        
+
 #pragma omp parallel for
         for (i = offset; i < chunkSize + offset; i++)
         {
