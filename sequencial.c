@@ -98,13 +98,13 @@ int main(int argc, char *argv[])
         // MOSTRA O TEMPO DE EXECUCAO
         printf("\nNodos: %d - Size: %d - Tempo: %lf \n", p - 1, SIZE, elapsed_time);
 
-        printf("Matriz Resultante (mres):\n");
-        for (int i = 0; i < SIZE; i++) {
-            for (int j = 0; j < SIZE; j++) {
-                printf("%d ", mres[i][j]);
-            }
-            printf("\n");
-        }
+        // printf("Matriz Resultante (mres):\n");
+        // for (int i = 0; i < SIZE; i++) {
+        //     for (int j = 0; j < SIZE; j++) {
+        //         printf("%d ", mres[i][j]);
+        //     }
+        //     printf("\n");
+        // }
 
         // VERIFICA SE O RESULTADO DA MULTIPLICACAO ESTA CORRETO
         for (i = 0; i < SIZE; i++)
@@ -158,7 +158,7 @@ int main(int argc, char *argv[])
         MPI_Recv(&chunkSize2, 1, MPI_INT, MESTREID, 0, MPI_COMM_WORLD, &status);
         MPI_Recv(&m1[offset2][0], chunkSize2 * SIZE, MPI_INT, MESTREID, 0, MPI_COMM_WORLD, &status);
 
-//#pragma omp parallel for
+#pragma omp parallel for
         for (i = offset2; i < chunkSize2 + offset2; i++)
         {
 
@@ -173,14 +173,6 @@ int main(int argc, char *argv[])
         }
 
         printf("Sou o %d, offset: %d, chunkSize: %d\n", id, offset2, chunkSize2);
-
-        // printf("Matriz Resultante (mres):\n");
-        // for (int i = 0; i < SIZE; i++) {
-        //     for (int j = 0; j < SIZE; j++) {
-        //         printf("%d - %d ", id, mres[i][j]);
-        //     }
-        //     printf("\n");
-        // }
 
         MPI_Send(&offset2, 1, MPI_INT, MESTREID, 0, MPI_COMM_WORLD);
         MPI_Send(&chunkSize2, 1, MPI_INT, MESTREID, 0, MPI_COMM_WORLD);
