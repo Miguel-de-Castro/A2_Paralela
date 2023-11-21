@@ -68,19 +68,19 @@ int main(int argc, char *argv[])
 
         int chunkSize = SIZE / (p - 1);
 
-        for (int i = 0; i < p - 1; ++i)
+        for (int i = 1; i < p; ++i)
         {
             int offset = i * chunkSize;
             // Ajuste para enviar linhas faltantes
             int chunkSizeToSend = chunkSize;
-            if (i == p - 2)
+            if (i == p - 1)
             {
                 chunkSizeToSend += SIZE % (p - 1);
             }
             // Envia dados
-            MPI_Send(&offset, 1, MPI_INT, i + 1, 0, MPI_COMM_WORLD);
-            MPI_Send(&chunkSizeToSend, 1, MPI_INT, i + 1, 0, MPI_COMM_WORLD);
-            MPI_Send(&m1[offset][0], chunkSizeToSend * SIZE, MPI_INT, i + 1, 0, MPI_COMM_WORLD);
+            MPI_Send(&offset, 1, MPI_INT, i, 0, MPI_COMM_WORLD);
+            MPI_Send(&chunkSizeToSend, 1, MPI_INT, i, 0, MPI_COMM_WORLD);
+            MPI_Send(&m1[offset][0], chunkSizeToSend * SIZE, MPI_INT, i, 0, MPI_COMM_WORLD);
         }
 
         for (int i = 0; i < p - 1; ++i)
