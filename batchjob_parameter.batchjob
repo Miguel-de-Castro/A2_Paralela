@@ -57,7 +57,7 @@ for nodes in {1..4}; do
     # Definindo o número de nós
     # Adapte conforme necessário para o SLURM
     # Exemplo: SLURM --nodes $nodes
-    sbatch --nodes $nodes -t 10 -o %x.$SLURM_JOBID.out -J job_$SLURM_JOBID mpirun --map-by node -np $((nodes+1)) ./$program-$size
+    # sbatch --nodes $nodes -t 10 -o %x.$SLURM_JOBID.out -J job_$SLURM_JOBID mpirun --map-by node -np $((nodes+1)) ./$program-$size
     echo
   done
 done

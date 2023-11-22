@@ -11,7 +11,7 @@
 ################ Change these parameters according to your requisites
 # nodes and tasks
 # SBATCH --ntasks 32
-# SBATCH --nodes 2
+#SBATCH --nodes 2
 # SBATCH --ntasks-per-node=16
 
 # time 
@@ -48,56 +48,6 @@
 ## all output in same file
 #SBATCH -o %x.%j.out
 
-# ################
-# echo Running on host `hostname`
-# echo
-# echo Initial Time is `date`
-# echo
-# echo Directory is `pwd`
-# echo
-# echo This jobs runs on the following nodes:
-# echo $SLURM_JOB_NODELIST
-# echo
-# echo JOB_ID:
-# echo $SLURM_JOBID
-# mkdir files_job_$SLURM_JOBID
-# echo Criado dir files_job_$SLURM_JOBID
-# program=$1
-# size=$2
-# echo Running $program size $size
-# # mpicc $program.c -o $program-$size -DSIZE=$size 
-# mpicc $program.c -o $program-$size -DSIZE=$size -fopenmp
-# echo ################
-
-# ############# Commands...
-
-# # #SBATCH --nodes 1
-
-# # echo "1 node - 2 processos (bynode)"
-# # mpirun --map-by node -np 2 ./$program-$size
-# # echo
-
-# echo "2 node - 3 processos (bynode)"
-# mpirun --map-by node -np 3 ./$program-$size
-# echo
-
-# # #SBATCH --nodes 3
-
-# # echo "3 node - 4 processos (bynode)"
-# # mpirun --map-by node -np 4 ./$program-$size
-# # echo
-
-# # #SBATCH --nodes 4
-
-# # echo "4 node - 5 processos (bynode)"
-# # mpirun --map-by node -np 5 ./$program-$size
-# # echo
-
-# ################
-
-# echo Final Time is `date`
-
-
 ################
 echo Running on host `hostname`
 echo
@@ -105,29 +55,43 @@ echo Initial Time is `date`
 echo
 echo Directory is `pwd`
 echo
-echo This job runs on the following nodes:
+echo This jobs runs on the following nodes:
 echo $SLURM_JOB_NODELIST
 echo
 echo JOB_ID:
 echo $SLURM_JOBID
 mkdir files_job_$SLURM_JOBID
-echo Created dir files_job_$SLURM_JOBID
-program=sequencial
+echo Criado dir files_job_$SLURM_JOBID
+program=$1
+size=$2
+echo Running $program size $size
+# mpicc $program.c -o $program-$size -DSIZE=$size 
+mpicc $program.c -o $program-$size -DSIZE=$size -fopenmp
+echo ################
 
-################ Loop over nodes and matrix sizes...
+############# Commands...
 
-for nodes in {1..4}; do
-  for size in {10..20..5}; do
-    echo Running $program size $size on $nodes nodes
-    mpicc $program.c -o $program-$size -DSIZE=$size -fopenmp
+# #SBATCH --nodes 1
 
-    # Definindo o número de nós
-    # Adapte conforme necessário para o SLURM
-    # Exemplo: SLURM --nodes $nodes
-    sbatch --nodes $nodes -t 10 -o %x.$SLURM_JOBID.out -J job_$SLURM_JOBID mpirun --map-by node -np $((nodes+1)) ./$program-$size
-    echo
-  done
-done
+# echo "1 node - 2 processos (bynode)"
+# mpirun --map-by node -np 2 ./$program-$size
+# echo
+
+echo "2 node - 3 processos (bynode)"
+mpirun --map-by node -np 3 ./$program-$size
+echo
+
+# #SBATCH --nodes 3
+
+# echo "3 node - 4 processos (bynode)"
+# mpirun --map-by node -np 4 ./$program-$size
+# echo
+
+# #SBATCH --nodes 4
+
+# echo "4 node - 5 processos (bynode)"
+# mpirun --map-by node -np 5 ./$program-$size
+# echo
 
 ################
 
