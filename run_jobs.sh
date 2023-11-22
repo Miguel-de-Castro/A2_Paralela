@@ -11,6 +11,7 @@ count=0
 for nodes in $(seq 1 4); do
     # Submetendo um trabalho SLURM para execução e obtendo o ID do trabalho
     job_id=$(sbatch --nodes $nodes $batchjob $program $nodes | awk '{print $4}')
+    wait 1
     job_ids[$count]=$job_id
     ((count++))
 done
