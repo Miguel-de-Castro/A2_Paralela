@@ -4,7 +4,7 @@
 batchjob="batchjob_parameter.batchjob"
 program=sequencial
 
-declare -a job_ids
+job_ids=()
 
 count=0
 
