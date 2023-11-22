@@ -12,5 +12,7 @@ for nodes in $(seq 1 4); do
   sbatch --nodes $nodes $batchjob $program $nodes
 done
 
+wait
+
 echo "Abrindo output_$program.txt"
 cat output_$program.txt
