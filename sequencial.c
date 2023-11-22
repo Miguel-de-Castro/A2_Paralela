@@ -99,16 +99,15 @@ int main(int argc, char *argv[])
         // MOSTRA O TEMPO DE EXECUCAO
         // printf("\nNodos: %d - Size: %d - Tempo: %lf \n", p - 1, SIZE, elapsed_time);
 
-        printf("\nMatriz Resultante Mestre (mres):\n");
-        for (int i = 0; i < SIZE; i++) {
-            for (int j = 0; j < SIZE; j++) {
-                printf("%d ", mres[i][j]);
-            }
-            printf("\n");
-        }
+        // printf("\nMatriz Resultante Mestre (mres):\n");
+        // for (int i = 0; i < SIZE; i++) {
+        //     for (int j = 0; j < SIZE; j++) {
+        //         printf("%d ", mres[i][j]);
+        //     }
+        //     printf("\n");
+        // }
 
-        printf("\n");
-        printf("\n");
+        // printf("\n");
 
         // VERIFICA SE O RESULTADO DA MULTIPLICACAO ESTA CORRETO
         // printf("Matriz Verifica Mestre :\n");
@@ -195,7 +194,7 @@ int main(int argc, char *argv[])
         // printf("\n");
         // printf("\n");
 
-        printf("Sou o %d, offset: %d, chunkSize: %d\n", id, offset2, chunkSize2);
+        // printf("Sou o %d, offset: %d, chunkSize: %d\n", id, offset2, chunkSize2);
 
 #pragma omp parallel for private(j, k) shared(m1, m2, mres)
         for (i = offset2; i < chunkSize2 + offset2; i++)
@@ -210,7 +209,7 @@ int main(int argc, char *argv[])
             }
         }
 
-#pragma omp barrier
+// #pragma omp barrier
 
         // printf("Matriz Resultante (mres):\n");
         // for (int i = 0; i < SIZE; i++) {
