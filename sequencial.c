@@ -197,7 +197,7 @@ int main(int argc, char *argv[])
 
         printf("Sou o %d, offset: %d, chunkSize: %d\n", id, offset2, chunkSize2);
 
-#pragma omp parallel for
+// #pragma omp parallel for
         for (i = offset2; i < chunkSize2 + offset2; i++)
         {
 
