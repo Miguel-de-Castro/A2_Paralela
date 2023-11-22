@@ -208,9 +208,11 @@ int main(int argc, char *argv[])
                 {
                     mres[i][j] += m1[i][k] * m2[k][j];
                 }
-                printf("i:, %d, j: %d, mres: %d\n", i, j, mres[i][j]);
+                // printf("i:, %d, j: %d, mres: %d\n", i, j, mres[i][j]);
             }
         }
+
+#pragma omp barrier
 
         // printf("Matriz Resultante (mres):\n");
         // for (int i = 0; i < SIZE; i++) {
