@@ -45,7 +45,7 @@ echo JOB_ID:
 echo $SLURM_JOBID
 mkdir files_job_$SLURM_JOBID
 echo Created dir files_job_$SLURM_JOBID
-program=$1
+program=sequencial
 
 ################ Loop over nodes and matrix sizes...
 
