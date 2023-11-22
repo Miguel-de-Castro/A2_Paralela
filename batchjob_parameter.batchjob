@@ -52,10 +52,10 @@ program=$1
 nodes=$2
 
 for size in {100..2000..100}; do
-  echo Running $program size $size
+  # echo Running $program size $size
   mpicc $program.c -o $program-$nodes-$size -DSIZE=$size -fopenmp
 
-  echo "Using $nodes node - $((nodes+1)) processes (bynode)"
+  # echo "Using $nodes node - $((nodes+1)) processes (bynode)"
   mpirun --map-by node -np $((nodes+1)) ./$program-$nodes-$size
   echo
 
