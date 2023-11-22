@@ -23,6 +23,8 @@ job_id_2=$(sbatch --nodes 2 $batchjob $program 2 | awk '{print $4}')
 job_id_3=$(sbatch --nodes 3 $batchjob $program 3 | awk '{print $4}')
 job_id_4=$(sbatch --nodes 4 $batchjob $program 4 | awk '{print $4}')
 
+wait 1
+
 echo ""
 more batchjob_parameter.batchjob.$job_id_1.out
 echo ""
