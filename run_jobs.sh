@@ -13,4 +13,4 @@ for nodes in $(seq 1 4); do
 done
 
 echo "Abrindo output_$program.txt"
-more output_$program.txt
+cat output_$program.txt
