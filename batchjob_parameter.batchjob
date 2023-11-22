@@ -1,6 +1,6 @@
 #!/bin/bash
-################ Comments
-################ "#SBATCH" (only one "#") are Batch Script commands
+################->  are comments
+################-> "#SBATCH" (only one "#") are Batch Script commands
 
 ################ Verbose mode
 
@@ -9,6 +9,11 @@
 ################
 
 ################ Change these parameters according to your requisites
+# nodes and tasks
+# SBATCH --ntasks 32
+#SBATCH --nodes $1
+# SBATCH --ntasks-per-node=16
+
 # time 
 #SBATCH -t 10
 # time formats =  "minutes", "minutes:seconds", "hours:minutes:seconds", "days-hours", "days-hours:minutes" and "days-hours:minutes:seconds"
@@ -47,20 +52,14 @@ mkdir files_job_$SLURM_JOBID
 echo Created dir files_job_$SLURM_JOBID
 program=sequencial
 
-################ Loop over nodes and matrix sizes...
+for size in {10..20..5}; do
+  echo Running $program size $size
+  mpicc $program.c -o $program-$size -DSIZE=$size -fopenmp
 
-for nodes in {1..4}; do
-  for size in {100..2000..100}; do
-    echo Running $program size $size on $nodes nodes
-    mpicc $program.c -o $program-$size -DSIZE=$size -fopenmp
+  echo "Using 1 node - 2 processes (bynode)"
+  mpirun --map-by node -np 2 ./$program-$size >> output_$program.txt
+  echo
 
-    # Submetendo um trabalho SLURM para execução
-    sbatch --nodes $nodes -t 10 -o %x.$SLURM_JOBID.out -J job_$SLURM_JOBID << EOF
-#!/bin/bash
-mpirun --map-by node -np $((nodes+1)) ./$program-$size
-EOF
-    echo
-  done
 done
 
 ################
