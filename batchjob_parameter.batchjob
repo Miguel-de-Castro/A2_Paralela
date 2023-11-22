@@ -55,8 +55,8 @@ for size in {10..20..5}; do
   echo Running $program size $size
   mpicc $program.c -o $program-$size -DSIZE=$size -fopenmp
 
-  echo "Using $((nodes-1)) node - $nodes processes (bynode)"
-  mpirun --map-by node -np 2 ./$program-$size >> output_$program_$SLURM_JOBID.txt
+  echo "Using $nodes node - $((nodes+1)) processes (bynode)"
+  mpirun --map-by node -np $((nodes+1)) ./$program-$size >> output_$program_$SLURM_JOBID.txt
   echo
 
 done
