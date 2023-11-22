@@ -168,33 +168,34 @@ int main(int argc, char *argv[])
 
         MPI_Bcast(&m2, SIZE * SIZE, MPI_INT, MESTREID, MPI_COMM_WORLD);
 
-        printf("%d - Recebeu m2:\n", id);
-        for (int i = 0; i < SIZE; i++) {
-            for (int j = 0; j < SIZE; j++) {
-                printf("%d ", m2[i][j]);
-            }
-            printf("\n");
-        }
+        // printf("%d - Recebeu m2:\n", id);
+        // for (int i = 0; i < SIZE; i++) {
+        //     for (int j = 0; j < SIZE; j++) {
+        //         printf("%d ", m2[i][j]);
+        //     }
+        //     printf("\n");
+        // }
 
-        printf("\n");
-        printf("\n");
+        // printf("\n");
+        // printf("\n");
 
         int offset2, chunkSize2;
         MPI_Recv(&offset2, 1, MPI_INT, MESTREID, 0, MPI_COMM_WORLD, &status);
         MPI_Recv(&chunkSize2, 1, MPI_INT, MESTREID, 0, MPI_COMM_WORLD, &status);
         MPI_Recv(&m1[offset2][0], chunkSize2 * SIZE, MPI_INT, MESTREID, 0, MPI_COMM_WORLD, &status);
 
-        printf("%d - Recebeu m1:\n", id);
-        for (int i = 0; i < SIZE; i++) {
-            for (int j = 0; j < SIZE; j++) {
-                printf("%d ", m1[i][j]);
-            }
-            printf("\n");
-        }
+        // printf("%d - Recebeu m1:\n", id);
+        // for (int i = 0; i < SIZE; i++) {
+        //     for (int j = 0; j < SIZE; j++) {
+        //         printf("%d ", m1[i][j]);
+        //     }
+        //     printf("\n");
+        // }
 
-        printf("\n");
-        printf("\n");
+        // printf("\n");
+        // printf("\n");
 
+        printf("Sou o %d, offset: %d, chunkSize: %d\n", id, offset2, chunkSize2);
 
 #pragma omp parallel for
         for (i = offset2; i < chunkSize2 + offset2; i++)
@@ -207,18 +208,19 @@ int main(int argc, char *argv[])
                 {
                     mres[i][j] += m1[i][k] * m2[k][j];
                 }
+                printf("i:, %d, j: %d, mres: %d\n", i, j, mres[i][j]);
             }
         }
 
-        printf("Sou o %d, offset: %d, chunkSize: %d\n", id, offset2, chunkSize2);
+        // printf("Matriz Resultante (mres):\n");
+        // for (int i = 0; i < SIZE; i++) {
+        //     for (int j = 0; j < SIZE; j++) {
+        //         printf("%d - %d ", id, mres[i][j]);
+        //     }
+        //     printf("\n");
+        // }
 
-        printf("Matriz Resultante (mres):\n");
-        for (int i = 0; i < SIZE; i++) {
-            for (int j = 0; j < SIZE; j++) {
-                printf("%d - %d ", id, mres[i][j]);
-            }
-            printf("\n");
-        }
+        printf("\n");
 
         MPI_Send(&offset2, 1, MPI_INT, MESTREID, 0, MPI_COMM_WORLD);
         MPI_Send(&chunkSize2, 1, MPI_INT, MESTREID, 0, MPI_COMM_WORLD);
