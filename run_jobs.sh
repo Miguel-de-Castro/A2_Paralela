@@ -4,13 +4,16 @@
 batchjob="batchjob_parameter.batchjob"
 program=sequencial
 
-> output_$program.txt
-
-# Loop para variar o número de nodos de 1 a 4
 for nodes in $(seq 1 4); do
-  # Submetendo um trabalho SLURM para execução
-  sbatch --nodes $nodes $batchjob $program $nodes
+  # Submetendo um trabalho SLURM para execução e obtendo o ID do trabalho
+  job_id=$(sbatch --nodes $nodes $batchjob $program $nodes | awk '{print $4}')
+  job_ids+=($job_id)
 done
 
-echo "Abrindo output_$program.txt"
-more batchjob_parameter.batchjob.5253.out
+# Esperar pela conclusão de todos os trabalhos SLURM
+for job_id in "${job_ids[@]}"; do
+  # Utilizar squeue para verificar a conclusão do trabalho
+    more batchjob_parameter.batchjob.$job_id.out
+    echo ""
+    echo ""
+done
