@@ -4,6 +4,8 @@
 batchjob="batchjob_parameter.batchjob"
 program=sequencial
 
+job_ids=()
+
 for nodes in $(seq 1 4); do
   # Submetendo um trabalho SLURM para execução e obtendo o ID do trabalho
   job_id=$(sbatch --nodes $nodes $batchjob $program $nodes | awk '{print $4}')
