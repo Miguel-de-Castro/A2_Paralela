@@ -1,0 +1,66 @@
+#!/bin/bash
+################->  are comments
+################-> "#SBATCH" (only one "#") are Batch Script commands
+
+################ Verbose mode
+
+#SBATCH --export=ALL
+
+################
+
+################ Change these parameters according to your requisites
+# nodes and tasks
+# SBATCH --ntasks 32
+#SBATCH --nodes 1
+# SBATCH --ntasks-per-node=16
+
+# time 
+#SBATCH -t 10
+# time formats =  "minutes", "minutes:seconds", "hours:minutes:seconds", "days-hours", "days-hours:minutes" and "days-hours:minutes:seconds"
+
+# Exclusive (alloc all threads from each node) or shared (alloc only threads set by "-n" parameter)
+#SBATCH --exclusive
+##SBATCH --shared
+
+################ Please, change this e-mail address to yours
+
+#SBATCH --mail-type=ALL
+#SBATCH --mail-user=example@edu.pucrs.br
+
+################
+
+#SBATCH --no-requeue
+
+################ Output options
+
+## all output in same file
+#SBATCH -o %x.%j.out
+
+################
+echo Running on host `hostname`
+echo
+echo Initial Time is `date`
+echo
+echo Directory is `pwd`
+echo
+echo This job runs on the following nodes:
+echo $SLURM_JOB_NODELIST
+echo
+echo JOB_ID:
+echo $SLURM_JOBID
+program=sequencialSor
+nodes=0
+
+for size in {100..2000..100}; do
+  # echo Running $program size $size
+  mpicc $program.c -o $program-$nodes-$size -DSIZE=$size
+
+  # echo "Using $nodes node - $((nodes+1)) processes (bynode)"
+  mpirun --map-by node -np $((nodes+1)) ./$program-$nodes-$size
+  echo
+
+done
+
+################
+
+echo Final Time is `date`
