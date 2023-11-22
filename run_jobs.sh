@@ -5,12 +5,12 @@ batchjob="batchjob_parameter.batchjob"
 program=sequencial
 
 for nodes in $(seq 1 4); do
-  # Submetendo um trabalho SLURM para execução e obtendo o ID do trabalho
-  job_id=$(sbatch --nodes $nodes $batchjob $program $nodes | awk '{print $4}')
-  # Utilizar squeue para verificar a conclusão do trabalho
-  while squeue --noheader -j $job_id &>/dev/null; do
-    sleep 1
-  done
+    # Submetendo um trabalho SLURM para execução e obtendo o ID do trabalho
+    job_id=$(sbatch --nodes $nodes $batchjob $program $nodes | awk '{print $4}')
+    # Utilizar squeue para verificar a conclusão do trabalho
+    while squeue --noheader -j $job_id &>/dev/null; do
+        sleep 1
+    done
     more batchjob_parameter.batchjob.$job_id.out
     echo ""
 done
