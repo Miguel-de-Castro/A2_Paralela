@@ -51,7 +51,7 @@ echo $SLURM_JOBID
 program=$1
 nodes=$2
 
-for size in {10..20..5}; do
+for size in {100..2000..100}; do
   echo Running $program size $size
   mpicc $program.c -o $program-$nodes-$size -DSIZE=$size -fopenmp
 
