@@ -48,7 +48,6 @@ echo $SLURM_JOB_NODELIST
 echo
 echo JOB_ID:
 echo $SLURM_JOBID
-echo Created dir files_job_$SLURM_JOBID
 program=$1
 nodes=$2
 
@@ -57,7 +56,7 @@ for size in {10..20..5}; do
   mpicc $program.c -o $program-$size -DSIZE=$size -fopenmp
 
   echo "Using $((nodes-1)) node - $nodes processes (bynode)"
-  mpirun --map-by node -np 2 ./$program-$size >> output_$program.txt
+  mpirun --map-by node -np 2 ./$program-$size >> output_$program_$SLURM_JOBID.txt
   echo
 
 done
