@@ -56,7 +56,7 @@ for size in {10..20..5}; do
   mpicc $program.c -o $program-$nodes-$size -DSIZE=$size -fopenmp
 
   echo "Using $nodes node - $((nodes+1)) processes (bynode)"
-  mpirun --map-by node -np $((nodes+1)) ./$program-$nodes-$size >> output_sequencial.txt 2>&1
+  mpirun --map-by node -np $((nodes+1)) ./$program-$nodes-$size
   echo
 
 done
