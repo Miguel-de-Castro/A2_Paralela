@@ -97,18 +97,18 @@ int main(int argc, char *argv[])
         // OBTEM O TEMPO
         elapsed_time += MPI_Wtime();
         // MOSTRA O TEMPO DE EXECUCAO
-        printf("\nNodos: %d - Size: %d - Tempo: %lf \n", p - 1, SIZE, elapsed_time);
+        // printf("\nNodos: %d - Size: %d - Tempo: %lf \n", p - 1, SIZE, elapsed_time);
 
-        printf("Matriz Resultante Mestre (mres):\n");
-        for (int i = 0; i < SIZE; i++) {
-            for (int j = 0; j < SIZE; j++) {
-                printf("%d ", mres[i][j]);
-            }
-            printf("\n");
-        }
+        // printf("Matriz Resultante Mestre (mres):\n");
+        // for (int i = 0; i < SIZE; i++) {
+        //     for (int j = 0; j < SIZE; j++) {
+        //         printf("%d ", mres[i][j]);
+        //     }
+        //     printf("\n");
+        // }
 
-        printf("\n");
-        printf("\n");
+        // printf("\n");
+        // printf("\n");
 
         // VERIFICA SE O RESULTADO DA MULTIPLICACAO ESTA CORRETO
         // printf("Matriz Verifica Mestre :\n");
@@ -155,7 +155,7 @@ int main(int argc, char *argv[])
             }
             // printf("\n");
         }
-        printf("\nMultiplicou certo! Nodos: %d - Size: %d - Tempo: %lf \n", p - 1, SIZE, elapsed_time);
+        printf("\nMultiplicou certo!\nNodos: %d - Size: %d - Tempo: %lf \n", p - 1, SIZE, elapsed_time);
     }
     else
     {
@@ -197,7 +197,7 @@ int main(int argc, char *argv[])
 
         printf("Sou o %d, offset: %d, chunkSize: %d\n", id, offset2, chunkSize2);
 
-// #pragma omp parallel for
+#pragma omp parallel for
         for (i = offset2; i < chunkSize2 + offset2; i++)
         {
 
