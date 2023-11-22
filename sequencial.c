@@ -77,7 +77,7 @@ int main(int argc, char *argv[])
             int chunkSizeToSend = chunkSize;
             if (i == p - 2)
             {
-                chunkSizeToSend += SIZE % (p - 2);
+                chunkSizeToSend = SIZE - offset;
             }
             // Envia dados
             MPI_Send(&offset, 1, MPI_INT, i + 1, 0, MPI_COMM_WORLD);
@@ -197,10 +197,9 @@ int main(int argc, char *argv[])
 
         printf("Sou o %d, offset: %d, chunkSize: %d\n", id, offset2, chunkSize2);
 
-#pragma omp parallel for
+#pragma omp parallel for private(j, k) shared(m1, m2, mres)
         for (i = offset2; i < chunkSize2 + offset2; i++)
         {
-
             for (j = 0; j < SIZE; j++)
             {
                 mres[i][j] = 0;
@@ -208,7 +207,6 @@ int main(int argc, char *argv[])
                 {
                     mres[i][j] += m1[i][k] * m2[k][j];
                 }
-                // printf("i:, %d, j: %d, mres: %d\n", i, j, mres[i][j]);
             }
         }
 
