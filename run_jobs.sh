@@ -11,3 +11,6 @@ for nodes in $(seq 1 4); do
   # Submetendo um trabalho SLURM para execução
   sbatch --nodes $nodes $batchjob $program $nodes
 done
+
+echo "Abrindo output_$program.txt"
+more output_$program.txt
