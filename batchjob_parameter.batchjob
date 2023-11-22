@@ -50,14 +50,15 @@ program=sequencial
 ################ Loop over nodes and matrix sizes...
 
 for nodes in {1..4}; do
-  for size in {10..20..5}; do
+  for size in {100..2000..100}; do
     echo Running $program size $size on $nodes nodes
     mpicc $program.c -o $program-$size -DSIZE=$size -fopenmp
 
-    # Definindo o número de nós
-    # Adapte conforme necessário para o SLURM
-    # Exemplo: SLURM --nodes $nodes
-    # sbatch --nodes $nodes -t 10 -o %x.$SLURM_JOBID.out -J job_$SLURM_JOBID mpirun --map-by node -np $((nodes+1)) ./$program-$size
+    # Submetendo um trabalho SLURM para execução
+    sbatch --nodes $nodes -t 10 -o %x.$SLURM_JOBID.out -J job_$SLURM_JOBID << EOF
+#!/bin/bash
+mpirun --map-by node -np $((nodes+1)) ./$program-$size
+EOF
     echo
   done
 done
