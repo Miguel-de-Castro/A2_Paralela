@@ -154,7 +154,7 @@ int main(int argc, char *argv[])
             }
             // printf("\n");
         }
-        printf("\nMultiplicou certo!\nNodos: %d - Size: %d - Tempo: %lf \n", p - 1, SIZE, elapsed_time);
+        printf("\nMultiplicou certo!\nNodos: %d - Processos: %d - Size: %d - Tempo: %lf \n", p - 1, p, SIZE, elapsed_time);
     }
     else
     {
