@@ -48,7 +48,7 @@ echo $SLURM_JOB_NODELIST
 echo
 echo JOB_ID:
 echo $SLURM_JOBID
-program=sequencialSor
+program=sequencial
 nodes=0
 
 for size in {100..2000..100}; do
